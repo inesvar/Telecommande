@@ -1,5 +1,5 @@
 /// \file Photo.h
-#include "BaseClass.h"
+#include "AbstractMedia.h"
 #include <iostream>
 
 /// \class Photo
@@ -7,7 +7,7 @@
 ///
 /// \param _latitude latitude of the place where the photo was taken
 /// \param _longitude longitude of the place where the photo was taken
-class Photo : public BaseClass {
+class Photo : public AbstractMedia {
 
     private:
         /// \brief latitude of the place where the photo was taken

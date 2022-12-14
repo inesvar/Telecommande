@@ -3,8 +3,8 @@
 #include <iostream>
 #include "Video.h"
 
-Video::Video(std::string name, std::string fileName, float length) : BaseClass(name, fileName) {
-    _length = length;
+Video::Video(std::string name, std::string fileName, float length) : AbstractMedia(name, fileName) {
+    this->_length = length;
 }
 
 void Video::print(std::ostream & output) const { 

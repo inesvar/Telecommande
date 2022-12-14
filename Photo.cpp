@@ -2,9 +2,9 @@
 
 #include <iostream>
 #include "Photo.h"
-#include "BaseClass.h"
+#include "AbstractMedia.h"
 
-Photo::Photo(std::string name, std::string fileName, float latitude, float longitude) : BaseClass(name, fileName) {
+Photo::Photo(std::string name, std::string fileName, float latitude, float longitude) : AbstractMedia(name, fileName) {
     _latitude = latitude;
     _longitude = longitude;
 }

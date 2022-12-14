@@ -1,4 +1,4 @@
-/// \file BaseClass.h
+/// \file AbstractMedia.h
 
 #ifndef BC
 #define BC
@@ -6,12 +6,12 @@
 #include <string>
 #include <iostream>
 
-/// \class BaseClass
+/// \class AbstractMedia
 /// \brief This superclass represents a multimedia object
 ///
 /// \param _name name of the multimedia file
 /// \param _fileName path to the mulimedia file
-class BaseClass {
+class AbstractMedia {
 
     private:
         /// \brief name of the multimedia object
@@ -21,15 +21,15 @@ class BaseClass {
 
     public:
         /// \brief Constructor
-        BaseClass() {}
+        AbstractMedia() {}
 
         /// \brief Constructor
         /// \param name name of the multimedia object
         /// \param fileName path to the multimedia file
-        BaseClass(std::string name, std::string fileName) : _name(name), _fileName(fileName) {}
+        AbstractMedia(std::string name, std::string fileName) : _name(name), _fileName(fileName) {}
         
         /// \brief Destructor
-        virtual ~BaseClass() {std::cout << "BaseClass" << _name << "destructor" << std::endl;}
+        virtual ~AbstractMedia() {std::cout << "AbstractMedia" << _name << "destructor" << std::endl;}
 
         /// \brief Getter
         /// \return _name : name of the multimedia object

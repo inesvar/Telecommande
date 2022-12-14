@@ -1,19 +1,23 @@
 /// \file main.cpp
 
 #include <iostream>
-#include "BaseClass.h"
+#include "AbstractMedia.h"
 #include "Video.h"
 #include "Photo.h"
 
-int main(int argc, const char* argv[])
-{
-    Video * v = new Video("us", "./video.webm", 0.2);
+int main(int argc, const char* argv[]) {
 
-    v->play();
+    int numberOfObjects = 2;
 
-    auto p = new Photo("us", "./Gala.jpg", 0, 0);
+    AbstractMedia * objects[numberOfObjects];
 
-    p->play();
+    objects[0] = new Video("us", "./video.webm", 0.2);
+    objects[1] = new Photo("us", "./Gala.jpg", 1, 2);
+
+    for (int i = 0 ; i < numberOfObjects ; i++) {
+        objects[i]->play();
+        objects[i]->print(std::cout);
+    }
 
     return 0;
 }

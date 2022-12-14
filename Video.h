@@ -1,12 +1,12 @@
 /// \file Video.h
-#include "BaseClass.h"
+#include "AbstractMedia.h"
 #include <iostream>
 
 /// \class Video
 /// \brief This superclass represents a video
 ///
 /// \param _length length of the video
-class Video : public BaseClass {
+class Video : public AbstractMedia {
 
     private:
         /// \brief the length of the video
@@ -27,7 +27,7 @@ class Video : public BaseClass {
 
         /// \brief Getter
         /// \return _length : the length of the video
-        unsigned int getLength() const {return _length;}
+        float getLength() const {return _length;}
 
         /// \brief Prints the instance variables of the video
         /// \param output the output file, or cout
