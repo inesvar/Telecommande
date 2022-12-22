@@ -1,58 +1,90 @@
-/// \file AbstractMedia.h
-
-#ifndef BC
-#define BC
+#ifndef ABSTRACT_MEDIA
+#define ABSTRACT_MEDIA
 
 #include <string>
 #include <iostream>
 
-/// \class AbstractMedia
-/// \brief This superclass represents a multimedia object
-///
-/// \param _name name of the multimedia file
-/// \param _fileName path to the mulimedia file
+/**
+ * @brief AbstractMedia can represent a video, a photo or a movie...
+ * 
+*/
 class AbstractMedia {
 
     private:
-        /// \brief name of the multimedia object
+        /**
+         * @brief Name of the multimedia object
+         * 
+        */
         std::string _name{};
-        /// \brief path to the multimedia file
+        
+        /**
+         * @brief Path to the multimedia file
+         * 
+        */
         std::string _fileName{};
 
     public:
-        /// \brief Constructor
+        /**
+         * @brief Constructs a new Abstract Media object
+         * 
+        */
         AbstractMedia() {}
 
-        /// \brief Constructor
-        /// \param name name of the multimedia object
-        /// \param fileName path to the multimedia file
-        AbstractMedia(std::string name, std::string fileName) : _name(name), _fileName(fileName) {}
+        /**
+         * @brief Constructs a new Abstract Media object
+         * 
+         * @param name Name of the multimedia object
+         * @param fileName Path to the multimedia object
+        */
+        AbstractMedia(std::string name, std::string fileName) : 
+                    _name(name), _fileName(fileName) {}
         
-        /// \brief Destructor
-        virtual ~AbstractMedia() {std::cout << "AbstractMedia" << _name << "destructor" << std::endl;}
+        /**
+         * @brief Destroys the Abstract Media object
+         * 
+        */
+        virtual ~AbstractMedia() {std::cout << "AbstractMedia " 
+                    << _name << " destructor" << std::endl;}
 
-        /// \brief Getter
-        /// \return _name : name of the multimedia object
+        /**
+         * @brief Gets the name of the multimedia object
+         * 
+         * @return std::string _name
+        */
         std::string getName() const {return _name;}
 
-        /// \brief Getter
-        /// \return _fileName : path to the multimedia file
+        /**
+         * @brief Gets the path to the multimedia object
+         * 
+         * @return std::string _fileName
+        */
         std::string getFileName() const {return _fileName;}
 
-        /// \brief Setter : changes the name of the multimedia object
-        /// \param name new name of the multimedia object
+        /**
+         * @brief Sets the name of the multimedia object
+         * 
+         * @param name 
+        */
         void setName(std::string name) {_name = name;}
 
-        /// \brief Setter : changes the path to the file
-        /// \param fileName new path to the multimedia file
+        /**
+         * @brief Sets the path to the multimedia file
+         * 
+         * @param fileName 
+        */
         void setFileName(std::string fileName) {_fileName = fileName;}
 
-        /// \brief Prints _name (name of the multimedia object) 
-        /// \brief and _fileName (path to the file) to the chosen output.
-        /// \param output
+        /**
+         * @brief Prints the instance variables (_name and _fileName)
+         * 
+         * @param output 
+        */
         virtual void print(std::ostream & output) const;
 
-        /// \brief Opens the multimedia file
+        /**
+         * @brief Opens the multimedia file
+         * 
+        */
         virtual void play() const = 0;
 };
 

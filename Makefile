@@ -14,7 +14,7 @@ PROG = main
 #
 # Fichiers sources (NE PAS METTRE les .h ni les .o seulement les .cpp)
 #
-SOURCES = Video.cpp Photo.cpp AbstractMedia.cpp main.cpp
+SOURCES = Film.cpp Video.cpp Photo.cpp AbstractMedia.cpp main.cpp
 
 #
 # Fichiers objets (ne pas modifier sauf si l'extension n'est pas .cpp)
@@ -54,8 +54,7 @@ LDLIBS =
 
 all: ${PROG}
 
-run: clean
-	make all
+run: ${PROG}
 	./${PROG}
 
 ${PROG}: depend-${PROG} ${OBJETS}
@@ -66,7 +65,7 @@ clean:
 
 clean-all: clean
 	-@$(RM) ${PROG} 1>/dev/null 2>&1
-	
+
 tar:
 	tar cvf ${PROG}.tar.gz ${SOURCES}
 

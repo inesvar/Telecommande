@@ -1,4 +1,6 @@
-/// \file main.cpp
+#define PART7
+
+#ifdef PART7
 
 #include <iostream>
 #include "AbstractMedia.h"
@@ -35,7 +37,8 @@ int main(int argc, const char* argv[]) {
     unsigned int * chapters3 = film->getChapters();
     unsigned int nb_chapters = film->getNumberOfChapters();
     chapters3[0]=50;
-    std::cout << std::endl << "Getting the FILM's chapters and setting th duration of the first chapter to 50..." << std::endl;
+    std::cout << std::endl << "Getting the FILM's chapters and setting " <<
+                "the duration of the first chapter to 50..." << std::endl;
 
     film->print(std::cout);
 

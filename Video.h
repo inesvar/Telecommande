@@ -1,39 +1,72 @@
-/// \file Video.h
-#include "AbstractMedia.h"
-#include <iostream>
+#ifndef VIDEO
+#define VIDEO
 
-/// \class Video
-/// \brief This superclass represents a video
-///
-/// \param _length length of the video
+#include <iostream>
+#include "AbstractMedia.h"
+
+
+/**
+ * @brief Video, has a length (integral value)
+ * 
+*/
 class Video : public AbstractMedia {
 
     private:
-        /// \brief the length of the video
-        float _length{};
+        /**
+         * @brief Length of the video
+         * 
+        */
+        unsigned int _length{};
 
     public:
-        /// \brief Constructor 
+        /**
+         * @brief Construct a new Video object
+         * 
+        */
         Video() {}
 
-        /// \brief Constructor
-        /// \param name name of the video
-        /// \param fileName path to the video file
-        /// \param length length of the video
-        Video(std::string name, std::string fileName, float length);
+        /**
+         * @brief Construct a new Video object
+         * 
+         *  \param name name of the video
+         *  \param fileName path to the video file
+         *  \param length length of the video
+        */
+        Video(std::string name, std::string fileName, unsigned int length);
 
-        /// \brief Destructor
+        /**
+         * @brief Destroy the Video object
+         * 
+        */
         ~Video() {std::cout << "Video destructor" << std::endl;}
 
-        /// \brief Getter
-        /// \return _length : the length of the video
-        float getLength() const {return _length;}
+        /**
+         * @brief Get the length of the video
+         * 
+         * @return unsigned int 
+        */
+        unsigned int getLength() const {return _length;}
 
-        /// \brief Prints the instance variables of the video
-        /// \param output the output file, or cout
+        /**
+         * @brief Set the length of the video
+         * 
+         * @param length 
+        */
+        void setLength(unsigned int length) {_length = length;}
+
+        /**
+         * @brief Prints the instance variables
+         * 
+         * @param output std::cout or file
+        */
         void print(std::ostream & output) const override;
 
-        /// \brief Plays the video
+        /**
+         * @brief Plays the video
+         * 
+        */
         void play() const override {system(("mpv " + getFileName() + " &").data()); }
 };
+
+#endif
 

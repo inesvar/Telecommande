@@ -24,7 +24,7 @@ En Java, on écrirait plutôt :
 
 `objects[i].play();`
 
-Cette différence est due au fait que le tableau `objects` contient ici des pointeurs vers les objets. Il est également possible de créer des tableaux d'objets en C++ : dans ce cas, on n'aurait pas besoin de déréférencer. En Java, on a une seule possibilité pour les tableaux d'objets : on fait des tableaux de références. Il n'y a donc pas besoin de distinguer deux cas, et le déréférencement est fait automatiquement.
+Cette différence est due au fait que le tableau `objects` contient ici des pointeurs vers les objets. Il est également possible de créer des tableaux d'objets en C++ : dans ce cas, on n'aurait pas besoin de déréférencer. En Java, on a une seule possibilité pour les tableaux d'objets : on fait des tableaux de références. Il n'y a donc pas besoin de distinguer deux cas.
 
 Ici, il est nécessaire d'utiliser un tableau de pointeurs parce que les éléments du tableau n'ont pas le même type, et donc ne prennent pas la même taille en mémoire. Or, les éléments du tableau seront attribués la même place en mémoire.
 
@@ -49,7 +49,9 @@ De même pour le modifieur qui réalise une copie profonde du tableau donné en 
 
 La seule classe qui générait des fuites mémoires était la classe `Film` car c'est la seule qui avait un pointeur parmi les variables d'instances. Pour corriger ce problème, on libère le pointeur dans le destructeur de l'objet.
 
-De même, puisque la classe `Film` contient ce fameux pointeur, on ne peut pas simplement réaliser des copies superficielles. En effet, le pointeur sera le même pour toutes les classes copiées  et elles partageront donc leur objet pointé. Il faut dont faire une copie en profondeur et recopier l'objet pointé et non le pointeur.
+De même, puisque la classe `Film` contient ce fameux pointeur, on ne peut pas simplement réaliser des copies superficielles. En effet, le pointeur sera le même pour toutes les classes copiées  et elles partageront donc leur objet pointé. 
+
+Il faut dont faire une copie en profondeur et recopier l'objet pointé et non le pointeur. J'ai implémenté un copy constructor pour la classe `Film`.
 
 ---
 
