@@ -5,7 +5,7 @@
  * @brief Represents a group of multimedia objects
  * 
 */
-class MediaGroup : std::list<AbstractMedia*> {
+class MediaGroup : public std::list<AbstractMedia*> {
 
 	private:
 		/**
