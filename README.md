@@ -55,3 +55,6 @@ Il faut dont faire une copie en profondeur et recopier l'objet pointé et non le
 
 ---
 
+## 8e étape : créer des groupes
+
+La liste d'objets doit être une liste de pointeurs afin que l'on puisse utiliser le polymorphisme. En Java, en dehors des types de base, on utilise toujours des pointeurs pour les listes d'objets, il n'y a donc pas de choix équivalent à faire.
