@@ -9,8 +9,8 @@ Video::Video(std::string name, std::string fileName, unsigned int length) :
 }
 
 void Video::print(std::ostream & output) const { 
-    output << std::endl << "The name of the video is : " << 
+    output << "The name of the video is : " << 
     this->getName() << std::endl << 
     "The file path is : " << this->getFileName() << std::endl << 
-    "The length of the video is : " << this->getLength() << std::endl;
+    "The length of the video is : " << this->getLength() << std::endl << std::endl;
 }
