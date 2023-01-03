@@ -13,6 +13,52 @@
 
 int main(int argc, const char* argv[]) {
 
+    #ifdef PART8_9
+
+    std::cout << std::endl << "Parts 8 to 9" << std::endl << std::endl;
+
+    std::shared_ptr<Video> sharedVideoPtr = std::make_shared<Video>("SHARED_VIDEO", "./kabuki.gif", 10);
+    std::shared_ptr<Photo> sharedPhotoPtr = std::make_shared<Photo>("SHARED_PHOTO", "./kabuki.jpg", 1, 2.4);
+
+    MediaGroup * mgKabuki = new MediaGroup("Kabuki");
+
+    mgKabuki->push_back(sharedVideoPtr);
+    mgKabuki->push_back(sharedPhotoPtr);
+    mgKabuki->push_back(std::make_shared<Photo>("PRIVATE_PHOTO", "./kabuki.jpg", 3, 2.4));
+
+    std::cout << "GROUP : " << mgKabuki->getName() << std::endl;
+
+    for (auto & it : *mgKabuki) {
+        it->print(std::cout);
+    }
+
+    MediaGroup * mgJapan = new MediaGroup("Japan");
+
+    mgJapan->push_back(sharedPhotoPtr);
+    //mgJapan->push_back(sharedVideoPtr);
+    mgJapan->push_back(std::make_shared<Photo>("PRIVATE_PHOTO_2", 
+                        "./sakura.jpg", 1, 2.4));
+    mgJapan->push_back(std::make_shared<Photo>("PRIVATE_PHOTO_3", 
+                        "./kanji.png", 1, 2.4));
+
+    std::cout << "GROUP : " << mgJapan->getName() << std::endl;
+
+    for (auto & it : *mgJapan) {
+        it->print(std::cout);
+    }
+
+    std::cout << "ERASING GROUP Kabuki... Only the private objects will be destroyed" 
+                        << std::endl;
+    mgKabuki->clear();
+
+    std::cout << "ERASING GROUP Japan... The private objects and shared objects will" 
+                        << "be destroyed" << std::endl;
+    mgJapan->clear();
+
+    #endif
+
+///////// ///////// ///////// ///////// ///////// ///////// ///////// ///////// 
+
     #ifdef PART1_7
     std::cout << std::endl << "Parts 1 to 7" << std::endl << std::endl;
 
@@ -65,52 +111,6 @@ int main(int argc, const char* argv[]) {
     }
     delete [] objects;
     delete film;
-
-    #endif
-
-///////// ///////// ///////// ///////// ///////// ///////// ///////// ///////// 
-
-    #ifdef PART8_9
-
-    std::cout << std::endl << "Parts 8 to 9" << std::endl << std::endl;
-
-    std::shared_ptr<Video> sharedVideoPtr = std::make_shared<Video>("SHARED_VIDEO", "./kabuki.gif", 10);
-    std::shared_ptr<Photo> sharedPhotoPtr = std::make_shared<Photo>("SHARED_PHOTO", "./kabuki.jpg", 1, 2.4);
-
-    MediaGroup * mgKabuki = new MediaGroup("Kabuki");
-
-    mgKabuki->push_back(sharedVideoPtr);
-    mgKabuki->push_back(sharedPhotoPtr);
-    mgKabuki->push_back(std::make_shared<Photo>("PRIVATE_PHOTO", "./kabuki.jpg", 3, 2.4));
-
-    std::cout << "GROUP : " << mgKabuki->getName() << std::endl;
-
-    for (auto & it : *mgKabuki) {
-        it->print(std::cout);
-    }
-
-    MediaGroup * mgJapan = new MediaGroup("Japan");
-
-    mgJapan->push_back(sharedPhotoPtr);
-    //mgJapan->push_back(sharedVideoPtr);
-    mgJapan->push_back(std::make_shared<Photo>("PRIVATE_PHOTO_2", 
-                        "./sakura.jpg", 1, 2.4));
-    mgJapan->push_back(std::make_shared<Photo>("PRIVATE_PHOTO_3", 
-                        "./kanji.png", 1, 2.4));
-
-    std::cout << "GROUP : " << mgJapan->getName() << std::endl;
-
-    for (auto & it : *mgJapan) {
-        it->print(std::cout);
-    }
-
-    std::cout << "ERASING GROUP Kabuki... Only the private objects will be destroyed" 
-                        << std::endl;
-    mgKabuki->clear();
-
-    std::cout << "ERASING GROUP Japan... The private objects and shared objects will" 
-                        << "be destroyed" << std::endl;
-    mgJapan->clear();
 
     #endif
 
