@@ -42,7 +42,8 @@ class Photo : public AbstractMedia {
          * @brief Destroy the Photo object
          * 
         */
-        ~Photo() {std::cout << "Photo destructor" << std::endl;}
+        ~Photo() {std::cout << "Photo " 
+                    << getName() << " destructor" << std::endl;}
 
         /**
          * @brief Gets the latitude of the photo

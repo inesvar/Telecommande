@@ -63,9 +63,7 @@ class Film : public Video {
          * @brief Destroys the Film object
          * 
         */
-        ~Film(); 
-        //there's a debate about whether a destructor should be "override" or no
-        //https://github.com/isocpp/CppCoreGuidelines/issues/721
+        ~Film();
 
         /**
          * @brief Sets the durations of the chapters

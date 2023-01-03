@@ -44,7 +44,7 @@ class AbstractMedia {
          * 
         */
         virtual ~AbstractMedia() {std::cout << "AbstractMedia " 
-                    << _name << " destructor" << std::endl;}
+                    << _name << " destructor" << std::endl << std::endl;}
 
         /**
          * @brief Gets the name of the multimedia object

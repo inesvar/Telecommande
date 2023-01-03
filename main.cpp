@@ -12,35 +12,43 @@
 
 int main(int argc, const char* argv[]) {
 
-    MediaGroup * mg = new MediaGroup("Kabuki");
+    std::shared_ptr<Video> sharedVideoPtr = std::make_shared<Video>("SHARED_VIDEO", "./kabuki.gif", 10);
+    std::shared_ptr<Photo> sharedPhotoPtr = std::make_shared<Photo>("SHARED_PHOTO", "./kabuki.jpg", 1, 2.4);
 
-    mg->push_back(std::make_shared<Video>("VIDEO", "./kabuki.gif", 10));
-    mg->push_back(std::make_shared<Photo>("PHOTO", "./kabuki.jpg", 1, 2.4));
+    MediaGroup * mgKabuki = new MediaGroup("Kabuki");
 
-    std::cout << "GROUP : " << mg->getName() << std::endl;
+    mgKabuki->push_back(sharedVideoPtr);
+    mgKabuki->push_back(sharedPhotoPtr);
+    mgKabuki->push_back(std::make_shared<Photo>("PRIVATE_PHOTO", "./kabuki.jpg", 3, 2.4));
 
-    for (auto & it : *mg) {
+    std::cout << "GROUP : " << mgKabuki->getName() << std::endl;
+
+    for (auto & it : *mgKabuki) {
         it->print(std::cout);
-        it->play();
     }
 
+    MediaGroup * mgJapan = new MediaGroup("Japan");
 
-
-    MediaGroup * mgJapon = new MediaGroup("Japon");
-
-    mgJapon->push_back(std::make_shared<Photo>("PHOTO", "./kabuki.jpg", 1, 2.4));
-    mgJapon->push_back(std::make_shared<Photo>("PHOTO", "./sakura.jpg", 1, 2.4));
-    mgJapon->push_back(std::make_shared<Photo>("PHOTO", "./kanji.png", 1, 2.4));
+    mgJapan->push_back(sharedPhotoPtr);
+    //mgJapan->push_back(sharedVideoPtr);
+    mgJapan->push_back(std::make_shared<Photo>("PRIVATE_PHOTO_2", "./sakura.jpg", 1, 2.4));
+    mgJapan->push_back(std::make_shared<Photo>("PRIVATE_PHOTO_3", "./kanji.png", 1, 2.4));
     
     unsigned int numberOfChapters = 5;
     unsigned int chapters[] = {2,5,2,2,4,2};
-    mgJapon->push_back(std::make_shared<Film>("FILM", "./kabuki.gif", 15, numberOfChapters, chapters));
+    mgJapan->push_back(std::make_shared<Film>("PRIVATE_FILM", "./kabuki.gif", 15, numberOfChapters, chapters));
 
-    std::cout << "GROUP : " << mgJapon->getName() << std::endl;
+    std::cout << "GROUP : " << mgJapan->getName() << std::endl;
 
-    for (auto & it : *mgJapon) {
+    for (auto & it : *mgJapan) {
         it->print(std::cout);
     }
+
+    std::cout << "ERASING GROUP Kabuki... Only the private objects will be destroyed" << std::endl;
+    mgKabuki->clear();
+
+    std::cout << "ERASING GROUP Japan... The private objects and shared objects will be destroyed" << std::endl;
+    mgJapan->clear();
 
     return 0;
 }

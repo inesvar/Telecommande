@@ -20,7 +20,8 @@ Film::Film(const Film& original) : Video(original) {
 }
 
 Film::~Film() {
-    std::cout << "Film destructor" << std::endl;
+    std::cout << "Film " 
+                    << getName() << " destructor" << std::endl;
     delete _chapters;
 }
 

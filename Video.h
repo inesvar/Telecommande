@@ -38,7 +38,8 @@ class Video : public AbstractMedia {
          * @brief Destroy the Video object
          * 
         */
-        ~Video() {std::cout << "Video destructor" << std::endl;}
+        ~Video() {std::cout << "Video " 
+                    << getName() << " destructor" << std::endl;}
 
         /**
          * @brief Get the length of the video
