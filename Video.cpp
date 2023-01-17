@@ -3,7 +3,7 @@
 #include <iostream>
 #include "Video.h"
 
-Video::Video(std::string name, std::string fileName, unsigned int length) : 
+Video::Video(const std::string & name, const std::string & fileName, unsigned int length) : 
                 AbstractMedia(name, fileName) {
     this->_length = length;
 }

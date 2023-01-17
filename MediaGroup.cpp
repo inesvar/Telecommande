@@ -4,5 +4,6 @@
 
 
 void MediaGroup::print(std::ostream & output) const {
-	for (auto & it : *this) it->print(std::cout);
+	output << "GROUP : " << getName() << std::endl;
+	for (auto & it : *this) it->print(output);
 }

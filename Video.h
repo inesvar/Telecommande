@@ -32,7 +32,7 @@ class Video : public AbstractMedia {
          *  \param fileName path to the video file
          *  \param length length of the video
         */
-        Video(std::string name, std::string fileName, unsigned int length);
+        Video(const std::string & name, const std::string & fileName, unsigned int length);
 
         /**
          * @brief Destroy the Video object

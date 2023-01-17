@@ -1,7 +1,7 @@
 #include <string.h>
 #include "Film.h"
 
-Film::Film(std::string name, std::string fileName, unsigned int length, 
+Film::Film(const std::string & name, const std::string & fileName, unsigned int length, 
             unsigned int numberOfChapters, unsigned int * chapters) : 
             Video(name, fileName, length) {
     _numberOfChapters = numberOfChapters;

@@ -1,6 +1,6 @@
 #define PART1_7
 #define PART8_9
-
+#define PART10
 
 
 #include <iostream>
@@ -10,8 +10,66 @@
 #include "Photo.h"
 #include "Film.h"
 #include "MediaGroup.h"
+#include "MediaIndex.h"
+
+#ifdef PART10
+typedef std::shared_ptr<AbstractMedia> AbstractMediaPtr;
+typedef std::shared_ptr<MediaGroup> MediaGroupPtr;
+typedef std::shared_ptr<Photo> PhotoPtr;
+typedef std::shared_ptr<Video> VideoPtr;
+typedef std::shared_ptr<Film> FilmPtr;
+#endif
 
 int main(int argc, const char* argv[]) {
+
+    #ifdef PART10
+
+    std::cout << std::endl << "Part 10" << std::endl << std::endl;
+
+    MediaIndex * mi = new MediaIndex();
+
+    MediaGroupPtr mediaGroupJapan = mi->createGroup("Japan");
+    MediaGroupPtr mediaGroupKabuki = mi->createGroup("Kabuki");
+
+    VideoPtr sharedVideoPtr2 = mi->createVideo("SHARED_VIDEO", 
+                        "./kabuki.gif", 10);
+    PhotoPtr sharedPhotoPtr2 = mi->createPhoto("SHARED_PHOTO", 
+                        "./kabuki.jpg", 1, 2.4);
+
+    mediaGroupKabuki->push_back(sharedVideoPtr2);
+    mediaGroupKabuki->push_back(sharedPhotoPtr2);
+    mediaGroupKabuki->push_back(mi->createPhoto("PRIVATE_PHOTO", "./kabuki.jpg", 3, 2.4));
+
+    mediaGroupKabuki->print(std::cout);
+
+    mediaGroupJapan->push_back(sharedPhotoPtr2);
+
+    mediaGroupJapan->push_back(sharedVideoPtr2);
+
+    mediaGroupJapan->push_back(mi->createPhoto("PRIVATE_PHOTO_2", 
+                        "./sakura.jpg", 1, 2.4));
+    mediaGroupJapan->push_back(mi->createPhoto("PRIVATE_PHOTO_3", 
+                        "./kanji.png", 1, 2.4));
+
+    mediaGroupJapan->print(std::cout);
+
+    std::cout << "Printing file PRIVATE_PHOTO_2" << std::endl;
+
+    mi->printMediaObject(std::cout, "PRIVATE_PHOTO_2");
+
+    std::cout << "Playing file SHARED_VIDEO" << std::endl;
+
+    mi->printMediaObject(std::cout, "SHARED_VIDEO");
+
+    std::cout << "ERASING GROUP Kabuki... Only the unique objects will be destroyed" 
+                        << std::endl;
+    
+
+    std::cout << "ERASING GROUP Japan... The unique objects and shared objects will" 
+                        << " be destroyed" << std::endl;
+
+
+    #endif
 
     #ifdef PART8_9
 
@@ -35,7 +93,7 @@ int main(int argc, const char* argv[]) {
     MediaGroup * mgJapan = new MediaGroup("Japan");
 
     mgJapan->push_back(sharedPhotoPtr);
-    //mgJapan->push_back(sharedVideoPtr);
+    mgJapan->push_back(sharedVideoPtr);
     mgJapan->push_back(std::make_shared<Photo>("PRIVATE_PHOTO_2", 
                         "./sakura.jpg", 1, 2.4));
     mgJapan->push_back(std::make_shared<Photo>("PRIVATE_PHOTO_3", 
@@ -47,12 +105,12 @@ int main(int argc, const char* argv[]) {
         it->print(std::cout);
     }
 
-    std::cout << "ERASING GROUP Kabuki... Only the private objects will be destroyed" 
+    std::cout << "ERASING GROUP Kabuki... Only the unique objects will be destroyed" 
                         << std::endl;
     mgKabuki->clear();
 
-    std::cout << "ERASING GROUP Japan... The private objects and shared objects will" 
-                        << "be destroyed" << std::endl;
+    std::cout << "ERASING GROUP Japan... The unique objects and shared objects will" 
+                        << " be destroyed" << std::endl;
     mgJapan->clear();
 
     #endif

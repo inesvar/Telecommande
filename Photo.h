@@ -1,6 +1,10 @@
 #include <iostream>
 #include "AbstractMedia.h"
 
+
+#ifndef PHOTO
+#define PHOTO
+
 /**
  * @brief Photo, has a latitude and longitude (float values)
  * 
@@ -36,7 +40,7 @@ class Photo : public AbstractMedia {
          *  \param latitude latitude of the place where the photo was taken
          *  \param longitude longitude of the place where the photo was taken
         */
-        Photo(std::string name, std::string fileName, float latitude, float longitude);
+        Photo(const std::string & name, const std::string & fileName, float latitude, float longitude);
 
         /**
          * @brief Destroy the Photo object
@@ -86,4 +90,6 @@ class Photo : public AbstractMedia {
         */
         void play() const override {system(("imagej " + getFileName() + " &").data()); }
 };
+
+#endif
 

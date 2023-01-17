@@ -2,6 +2,10 @@
 #include "Video.h"
 #include <iostream>
 
+
+#ifndef FILM
+#define FILM
+
 /**
  * @brief Film class : each film has a length, several chapters (also with a length)
  * 
@@ -35,7 +39,7 @@ class Film : public Video {
          * @param fileName path to the movie file
          * @param length of the movie
         */
-        Film(std::string name, std::string fileName, 
+        Film(const std::string & name, const std::string & fileName, 
                     unsigned int length) : Video (name, fileName, length) {}
         
         /**
@@ -47,7 +51,7 @@ class Film : public Video {
          * @param numberOfChapters 
          * @param chapters duration of each chapter
         */
-        Film(std::string name, std::string fileName, 
+        Film(const std::string & name, const std::string & fileName, 
                     unsigned int length, unsigned int numberOfChapters, 
                     unsigned int * chapters);
 
@@ -97,3 +101,4 @@ class Film : public Video {
         void print(std::ostream & output) const override;
 };
 
+#endif

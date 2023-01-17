@@ -97,4 +97,4 @@ depend-${PROG}:
 #
 # Inclusion du fichier des dependances
 #
--include depend-${PROG}
+-include depend-${PROG};

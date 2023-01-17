@@ -4,7 +4,7 @@
 #include "Photo.h"
 #include "AbstractMedia.h"
 
-Photo::Photo(std::string name, std::string fileName, float latitude, 
+Photo::Photo(const std::string & name, const std::string & fileName, float latitude, 
                 float longitude) : AbstractMedia(name, fileName) {
     _latitude = latitude;
     _longitude = longitude;

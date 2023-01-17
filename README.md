@@ -36,7 +36,7 @@ Dans le cas du C++, il est également nécessaire de détruire les pointés quan
 
 Comme on code un accesseur pour le tableau des durées des chapitres, nous avons besoin de connaître sa longueur. J'ai donc choisi de créer une deuxième variable d'instance `_numberOfChapters`.
 
-De façon cohérence, j'ai implémenté un deuxième accesseur, donc un pour chaque variable d'instance. Ainsi, on peut utiliser correctement le tableau de durée puisqu'on connait sa longueur.
+De façon cohérente, j'ai implémenté un deuxième accesseur, donc un pour chaque variable d'instance. Ainsi, on peut utiliser correctement le tableau de durée puisqu'on connait sa longueur.
 
 Comme il est nécessaire d'utiliser les deux accesseurs pour accéder aux chapitres, j'ai initialement envisagé de faire un unique accesseur qui renvoie une le tableau des données, avec ajouté au début du tableau, le nombre de chapitres, mais c'est finalement plus lisible au niveau du code d'avoir deux accesseurs.
 
@@ -57,4 +57,4 @@ Il faut dont faire une copie en profondeur et recopier l'objet pointé et non le
 
 ## 8e étape : créer des groupes
 
-La liste d'objets doit être une liste de pointeurs afin que l'on puisse utiliser le polymorphisme. En Java, en dehors des types de base, on utilise toujours des pointeurs pour les listes d'objets, il n'y a donc pas de choix équivalent à faire.
+La liste d'objets doit être une liste de pointeurs afin que l'on puisse utiliser le polymorphisme. En Java, en dehors des types de base, on utilise toujours des références pour les listes d'objets, il n'y a donc pas de choix équivalent à faire.

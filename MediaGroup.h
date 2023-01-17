@@ -2,6 +2,9 @@
 #include <memory>
 #include "AbstractMedia.h"
 
+#ifndef MEDIA_GROUP
+#define MEDIA_GROUP
+
 typedef std::shared_ptr<AbstractMedia> AbstractMediaPtr;
 
 /**
@@ -23,14 +26,14 @@ class MediaGroup : public std::list<AbstractMediaPtr> {
 		 * 
 		 * @param filename 
 		*/
-		MediaGroup(std::string filename) : std::list<AbstractMediaPtr>(), _filename(filename){};
+		MediaGroup(const std::string & filename) : std::list<AbstractMediaPtr>(), _filename(filename){};
 
 		/**
 		 * @brief Get the name of the multimedia group
 		 * 
-		 * @return std::string 
+		 * @return const std::string & 
 		*/
-		std::string getName() const { return _filename;}
+		const std::string & getName() const { return _filename;}
 
 		/**
 		 * @brief Print all the attributes of the multimedia objects in the group
@@ -39,3 +42,5 @@ class MediaGroup : public std::list<AbstractMediaPtr> {
 		*/
 		void print(std::ostream & output) const;
 };
+
+#endif

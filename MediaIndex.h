@@ -38,7 +38,7 @@ class MediaIndex {
 		 * @param name 
 		 * @return AbstractMediaPtr 
 		*/
-		AbstractMediaPtr findMediaObject(std::string name) const;
+		AbstractMediaPtr findMediaObject(const std::string & name) const;
 
 		/**
 		 * @brief Return a pointer to the group with a given name if it exists
@@ -46,7 +46,7 @@ class MediaIndex {
 		 * @param name 
 		 * @return MediaGroupPtr 
 		*/
-		MediaGroupPtr findMediaGroup(std::string name) const;
+		MediaGroupPtr findMediaGroup(const std::string & name) const;
 
 		/**
 		 * @brief Print all the attributes of a multimedia object with a given name if it exists
@@ -54,7 +54,7 @@ class MediaIndex {
 		 * @param output 
 		 * @param name 
 		*/
-		void printMediaObject(std::ostream & output, std::string name) const;
+		void printMediaObject(std::ostream & output, const std::string & name) const;
 
 		/**
 		 * @brief Print all the attributes of a multimedia group with a given name if it exists
@@ -62,14 +62,28 @@ class MediaIndex {
 		 * @param output 
 		 * @param name 
 		*/
-		void printMediaGroup(std::ostream & output, std::string name) const;
+		void printMediaGroup(std::ostream & output, const std::string & name) const;
 
 		/**
 		 * @brief Play a multimedia object with a given name if it exists
 		 * 
 		 * @param name 
 		*/
-		void playMediaObject(std::string name) const;
+		void playMediaObject(const std::string & name) const;
+
+		/**
+		 * @brief Erase a multimedia object with a given name if it exists
+		 * 
+		 * @param name 
+		*/
+		void eraseMediaObject(const std::string & name);
+
+		/**
+		 * @brief Erase a multimedia group with a given name if it exists
+		 * 
+		 * @param name 
+		*/
+		void eraseMediaGroup(const std::string & name);
 
 		/**
 		 * @brief Construct a new multimedia object of type Film, Video or Photo
@@ -79,8 +93,8 @@ class MediaIndex {
 		 * @param filename 
 		 * @return std::shared_ptr<T> 
 		*/
-		template <typename T> std::shared_ptr<T> createNewObject(std::string name, 
-							std::string filename);
+		template <typename T> std::shared_ptr<T> createNewObject(const std::string & name, 
+							const std::string & filename);
 
 		/**
 		 * @brief Create a Photo object
@@ -91,7 +105,7 @@ class MediaIndex {
 		 * @param longitude 
 		 * @return PhotoPtr 
 		*/
-		PhotoPtr createPhoto(std::string name, std::string filename, float latitude, 
+		PhotoPtr createPhoto(const std::string & name, const std::string & filename, float latitude, 
 							float longitude);
 
 		/**
@@ -102,7 +116,7 @@ class MediaIndex {
 		 * @param length 
 		 * @return VideoPtr 
 		*/
-		VideoPtr createVideo(std::string name, std::string filename, unsigned int length);	
+		VideoPtr createVideo(const std::string & name, const std::string & filename, unsigned int length);	
 
 		/**
 		 * @brief Create a Film object
@@ -114,7 +128,7 @@ class MediaIndex {
 		 * @param chapters 
 		 * @return FilmPtr 
 		*/
-		FilmPtr createFilm(std::string name, std::string filename, unsigned int length, 
+		FilmPtr createFilm(const std::string & name, const std::string & filename, unsigned int length, 
 							unsigned int numberOfChapters, unsigned int * chapters);	
 
 		/**
@@ -123,6 +137,6 @@ class MediaIndex {
 		 * @param name 
 		 * @return MediaGroupPtr 
 		*/
-		MediaGroupPtr createGroup(std::string name);	
+		MediaGroupPtr createGroup(const std::string & name);	
 };
 //// //// //// //// //// //// //// //// //// //// //// //// //// //// //// //// 
