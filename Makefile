@@ -14,7 +14,7 @@ PROG = main
 #
 # Fichiers sources (NE PAS METTRE les .h ni les .o seulement les .cpp)
 #
-SOURCES = $(wildcard *.cpp)
+SOURCES = AbstractMedia.cpp ccsocket.cpp Film.cpp main.cpp MediaGroup.cpp MediaIndex.cpp Photo.cpp tcpserver.cpp Video.cpp
 
 #
 # Fichiers objets (ne pas modifier sauf si l'extension n'est pas .cpp)
@@ -43,7 +43,7 @@ LDFLAGS =
 # Librairies a utiliser
 # Exemple: LDLIBS = -L/usr/local/qt/lib -lqt
 #
-LDLIBS = 
+LDLIBS = -lpthread
 
 
 ##########################################

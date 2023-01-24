@@ -35,12 +35,21 @@ class Photo : public AbstractMedia {
         /**
          * @brief Construct a new Photo object
          * 
+         * \param name name of the file
+         * \param filename path to the photo file
+         * 
+        */
+        Photo(const std::string & name, const std::string & filename) : AbstractMedia(name, filename) {};
+
+        /**
+         * @brief Construct a new Photo object
+         * 
          *  \param name name of the photo
-         *  \param fileName path to the photo file
+         *  \param filename path to the photo file
          *  \param latitude latitude of the place where the photo was taken
          *  \param longitude longitude of the place where the photo was taken
         */
-        Photo(const std::string & name, const std::string & fileName, float latitude, float longitude);
+        Photo(const std::string & name, const std::string & filename, float latitude, float longitude);
 
         /**
          * @brief Destroy the Photo object
@@ -88,7 +97,7 @@ class Photo : public AbstractMedia {
          * @brief Displays the photo
          * 
         */
-        void play() const override {system(("imagej " + getFileName() + " &").data()); }
+        void play() const override {system(("imagej " + getfilename() + " &").data()); }
 };
 
 #endif

@@ -21,7 +21,7 @@ class AbstractMedia {
          * @brief Path to the multimedia file
          * 
         */
-        std::string _fileName{};
+        std::string _filename{};
 
     public:
         /**
@@ -34,10 +34,10 @@ class AbstractMedia {
          * @brief Constructs a new Abstract Media object
          * 
          * @param name Name of the multimedia object
-         * @param fileName Path to the multimedia object
+         * @param filename Path to the multimedia object
         */
-        AbstractMedia(const std::string &name, const std::string &fileName) : 
-                    _name(name), _fileName(fileName) {}
+        AbstractMedia(const std::string &name, const std::string &filename) : 
+                    _name(name), _filename(filename) {}
         
         /**
          * @brief Destroys the Abstract Media object
@@ -56,9 +56,9 @@ class AbstractMedia {
         /**
          * @brief Gets the path to the multimedia object
          * 
-         * @return const std::string & _fileName
+         * @return const std::string & _filename
         */
-        const std::string & getFileName() const {return _fileName;}
+        const std::string & getfilename() const {return _filename;}
 
         /**
          * @brief Sets the name of the multimedia object
@@ -70,12 +70,12 @@ class AbstractMedia {
         /**
          * @brief Sets the path to the multimedia file
          * 
-         * @param fileName 
+         * @param filename 
         */
-        void setFileName(const std::string & fileName) {_fileName = fileName;}
+        void setfilename(const std::string & filename) {_filename = filename;}
 
         /**
-         * @brief Prints the instance variables (_name and _fileName)
+         * @brief Prints the instance variables (_name and _filename)
          * 
          * @param output 
         */

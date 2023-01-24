@@ -3,14 +3,14 @@
 #include <iostream>
 #include "Video.h"
 
-Video::Video(const std::string & name, const std::string & fileName, unsigned int length) : 
-                AbstractMedia(name, fileName) {
+Video::Video(const std::string & name, const std::string & filename, unsigned int length) : 
+                AbstractMedia(name, filename) {
     this->_length = length;
 }
 
 void Video::print(std::ostream & output) const { 
     output << "The name of the video is : " << 
-    this->getName() << std::endl << 
-    "The file path is : " << this->getFileName() << std::endl << 
-    "The length of the video is : " << this->getLength() << std::endl << std::endl;
+    this->getName()<< "     " << 
+    "The file path is : " << this->getfilename()<< "     " << 
+    "The length of the video is : " << this->getLength()<< "     "<< "     ";
 }

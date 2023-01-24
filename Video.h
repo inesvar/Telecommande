@@ -28,11 +28,20 @@ class Video : public AbstractMedia {
         /**
          * @brief Construct a new Video object
          * 
+         * \param name name of the video
+         * \param filename path to the video file
+         * 
+        */
+        Video(const std::string & name, const std::string & filename) : AbstractMedia(name, filename) {};
+
+        /**
+         * @brief Construct a new Video object
+         * 
          *  \param name name of the video
-         *  \param fileName path to the video file
+         *  \param filename path to the video file
          *  \param length length of the video
         */
-        Video(const std::string & name, const std::string & fileName, unsigned int length);
+        Video(const std::string & name, const std::string & filename, unsigned int length);
 
         /**
          * @brief Destroy the Video object
@@ -66,7 +75,7 @@ class Video : public AbstractMedia {
          * @brief Plays the video
          * 
         */
-        void play() const override {system(("mpv " + getFileName() + " &").data()); }
+        void play() const override {system(("mpv " + getfilename() + " &").data()); }
 };
 
 #endif

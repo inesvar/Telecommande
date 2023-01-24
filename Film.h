@@ -33,25 +33,34 @@ class Film : public Video {
         Film() {}
 
         /**
+         * @brief Construct a new Film object
+         * 
+         * \param name name of the file
+         * \param filename path to the file
+         * 
+        */
+        Film(const std::string & name, const std::string & filename) : Video(name, filename) {};
+
+        /**
          * @brief Constructs a new Film object
          * 
          * @param name of the movie
-         * @param fileName path to the movie file
+         * @param filename path to the movie file
          * @param length of the movie
         */
-        Film(const std::string & name, const std::string & fileName, 
-                    unsigned int length) : Video (name, fileName, length) {}
+        Film(const std::string & name, const std::string & filename, 
+                    unsigned int length) : Video (name, filename, length) {}
         
         /**
          * @brief Constructs a new Film object
          * 
          * @param name of the movie
-         * @param fileName path to the movie file
+         * @param filename path to the movie file
          * @param length of the movie
          * @param numberOfChapters 
          * @param chapters duration of each chapter
         */
-        Film(const std::string & name, const std::string & fileName, 
+        Film(const std::string & name, const std::string & filename, 
                     unsigned int length, unsigned int numberOfChapters, 
                     unsigned int * chapters);
 

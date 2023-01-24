@@ -94,7 +94,16 @@ class MediaIndex {
 		 * @return std::shared_ptr<T> 
 		*/
 		template <typename T> std::shared_ptr<T> createNewObject(const std::string & name, 
-							const std::string & filename);
+							const std::string & filename) {
+								try {
+									findMediaObject(name);
+								} catch (std::exception& e) {
+									auto newPtr = std::make_shared<T>(name, filename);
+									_mediaObjects[name] = newPtr; 
+									return newPtr;
+								}
+								throw std::runtime_error("A file named "+name+" already exists");
+							};
 
 		/**
 		 * @brief Create a Photo object

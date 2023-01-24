@@ -1,9 +1,9 @@
 #include <string.h>
 #include "Film.h"
 
-Film::Film(const std::string & name, const std::string & fileName, unsigned int length, 
+Film::Film(const std::string & name, const std::string & filename, unsigned int length, 
             unsigned int numberOfChapters, unsigned int * chapters) : 
-            Video(name, fileName, length) {
+            Video(name, filename, length) {
     _numberOfChapters = numberOfChapters;
     _chapters = new unsigned int[numberOfChapters];
     for (unsigned int i = 0; i < numberOfChapters; i++) {
@@ -49,11 +49,11 @@ unsigned int Film::getNumberOfChapters() const {
 
 void Film::print(std::ostream & output) const { 
     output << "The name of the film is : " << getName() << 
-    std::endl << "The file path is : " << getFileName() << std::endl << 
-    "The length of the video is : " << getLength() << std::endl <<
-    "There are " << getNumberOfChapters() << " chapters" << std::endl;
+    std::endl << "The file path is : " << getfilename()<< "     " << 
+    "The length of the video is : " << getLength()<< "     " <<
+    "There are " << getNumberOfChapters() << " chapters"<< "     ";
     for (unsigned int i = 0; i < _numberOfChapters; i++) {
-        output << "Chapter number " << i+1 << " : " << _chapters[i] << std::endl;
+        output << "Chapter number " << i+1 << " : " << _chapters[i]<< "     ";
     }
-    output << std::endl;
+    output<< "     ";
 }

@@ -6,7 +6,7 @@ AbstractMediaPtr MediaIndex::findMediaObject(const std::string & name) const{
 	if(it != _mediaObjects.end()){
 		return it->second;
 	}
-	throw std::runtime_error("Media object not found" + name);
+	throw std::runtime_error(name +" wasn't  found");
 }
 
 MediaGroupPtr MediaIndex::findMediaGroup(const std::string & name) const{
@@ -14,7 +14,7 @@ MediaGroupPtr MediaIndex::findMediaGroup(const std::string & name) const{
 	if(it != _groups.end()){
 		return it->second;
 	}
-	throw std::runtime_error("Media group not found" + name);
+	throw std::runtime_error(name +" wasn't  found");
 }
 
 void MediaIndex::printMediaObject(std::ostream & output, const std::string & name) const{
@@ -33,13 +33,13 @@ void MediaIndex::eraseMediaObject(const std::string & name) {
 
 }
 
-template <typename T> std::shared_ptr<T> MediaIndex::createNewObject(
+/*template <typename T> std::shared_ptr<T> MediaIndex::createNewObject(
 					const std::string & name, const std::string & filename){
 	
 	AbstractMediaPtr newPtr = std::make_shared<T>(name, filename);
 	_mediaObjects[name] = newPtr; 
 	return newPtr;
-}
+}*/
 
 PhotoPtr MediaIndex::createPhoto(const std::string & name, const std::string & filename, float latitude, float longitude){
 	PhotoPtr newPtr = std::make_shared<Photo>(name, filename, latitude, longitude);
