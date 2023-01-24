@@ -30,16 +30,27 @@ void MediaIndex::playMediaObject(const std::string & name) const{
 }
 
 void MediaIndex::eraseMediaObject(const std::string & name) {
-
+	try {
+		AbstractMediaPtr am = findMediaObject(name);
+		for(auto const &g : _groups) {
+			g.second->remove(am);
+		}
+		_mediaObjects.erase(name);
+		return;
+	} catch (std::exception &e) { //only the findMediaObject can throw an exception
+		throw std::runtime_error("No file named "+name+" exists");
+	}
 }
 
-/*template <typename T> std::shared_ptr<T> MediaIndex::createNewObject(
-					const std::string & name, const std::string & filename){
-	
-	AbstractMediaPtr newPtr = std::make_shared<T>(name, filename);
-	_mediaObjects[name] = newPtr; 
-	return newPtr;
-}*/
+void MediaIndex::eraseMediaGroup(const std::string & name) {
+	try {
+		MediaGroupPtr am = findMediaGroup(name);
+		_groups.erase(name);
+		return;
+	} catch (std::exception &e) { //only the findMediaObject can throw an exception
+		throw std::runtime_error("No group named "+name+" exists");
+	}
+}
 
 PhotoPtr MediaIndex::createPhoto(const std::string & name, const std::string & filename, float latitude, float longitude){
 	PhotoPtr newPtr = std::make_shared<Photo>(name, filename, latitude, longitude);
@@ -60,6 +71,10 @@ FilmPtr MediaIndex::createFilm(const std::string & name, const std::string & fil
 }
 
 MediaGroupPtr MediaIndex::createGroup(const std::string & name){
+	if (_groups.count(name) > 0) {
+		throw std::runtime_error("A group named "+name+" already exists");
+		return nullptr;
+	}
 	MediaGroupPtr newPtr = std::make_shared<MediaGroup>(name);
 	_groups[name] = newPtr; 
 	return newPtr;

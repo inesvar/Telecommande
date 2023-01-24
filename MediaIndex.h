@@ -95,14 +95,13 @@ class MediaIndex {
 		*/
 		template <typename T> std::shared_ptr<T> createNewObject(const std::string & name, 
 							const std::string & filename) {
-								try {
-									findMediaObject(name);
-								} catch (std::exception& e) {
-									auto newPtr = std::make_shared<T>(name, filename);
-									_mediaObjects[name] = newPtr; 
-									return newPtr;
+								if (_groups.count(name) > 0) {
+									throw std::runtime_error("A group named "+name+" already exists");
+									return nullptr;
 								}
-								throw std::runtime_error("A file named "+name+" already exists");
+								auto newPtr = std::make_shared<T>(name, filename);
+								_mediaObjects[name] = newPtr; 
+								return newPtr;
 							};
 
 		/**
@@ -146,6 +145,6 @@ class MediaIndex {
 		 * @param name 
 		 * @return MediaGroupPtr 
 		*/
-		MediaGroupPtr createGroup(const std::string & name);	
+		MediaGroupPtr createGroup(const std::string & name);
 };
 //// //// //// //// //// //// //// //// //// //// //// //// //// //// //// //// 

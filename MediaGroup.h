@@ -29,6 +29,11 @@ class MediaGroup : public std::list<AbstractMediaPtr> {
 		MediaGroup(const std::string & filename) : std::list<AbstractMediaPtr>(), _filename(filename){};
 
 		/**
+		 * @brief Destruct a MediaGroup object
+		*/
+		~MediaGroup();
+
+		/**
 		 * @brief Get the name of the multimedia group
 		 * 
 		 * @return const std::string & 

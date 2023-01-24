@@ -1,6 +1,6 @@
-//#define PART1_7
-//#define PART8_9
-#define PART10_11
+#define PART1_7
+#define PART8_9
+//#define PART10_13
 
 
 #include <bits/stdc++.h>
@@ -30,14 +30,14 @@ int main(int argc, const char* argv[]) {
 
 ///////// ///////// ///////// ///////// ///////// ///////// ///////// /////////
 
-    #ifdef PART10_11
+    #ifdef PART10_13
 
-    if (argc > 2) {
+    /*if (argc > 2) {
         std::cout << "Usage: " << argv[0] << " [port]"<< std::endl;
         return 1;
     } else if (argc == 2) {
         PORT = std::stoi(argv[1]);
-    }
+    }*/
 
     std::cout<< std::endl << "Parts 10 to 11"<< std::endl<< std::endl;
 
@@ -54,7 +54,7 @@ int main(int argc, const char* argv[]) {
 
     mediaGroupKabuki->push_back(sharedVideoPtr2);
     mediaGroupKabuki->push_back(sharedPhotoPtr2);
-    mediaGroupKabuki->push_back(mi->createPhoto("PRIVATE_PHOTO", "./kabuki.jpg", 3, 2.4));
+    mediaGroupKabuki->push_back(mi->createPhoto("UNIQUE_PHOTO", "./kabuki.jpg", 3, 2.4));
 
     mediaGroupKabuki->print(std::cout);
 
@@ -62,12 +62,20 @@ int main(int argc, const char* argv[]) {
 
     mediaGroupJapan->push_back(sharedVideoPtr2);
 
-    mediaGroupJapan->push_back(mi->createPhoto("PRIVATE_PHOTO_2", 
+    mediaGroupJapan->push_back(mi->createPhoto("UNIQUE_PHOTO_2", 
                         "./sakura.jpg", 1, 2.4));
-    mediaGroupJapan->push_back(mi->createPhoto("PRIVATE_PHOTO_3", 
+    mediaGroupJapan->push_back(mi->createPhoto("UNIQUE_PHOTO_3", 
                         "./kanji.png", 1, 2.4));
 
     mediaGroupJapan->print(std::cout);
+
+    mi->createPhoto("UNIQUE_PHOTO_4", "./kanji.png", 1, 5);
+
+    // erase the main owned pointers
+    sharedPhotoPtr2.reset();
+    sharedVideoPtr2.reset();
+    mediaGroupJapan.reset();
+    mediaGroupKabuki.reset();
 
 
     // creates the TCPServer
@@ -81,9 +89,10 @@ int main(int argc, const char* argv[]) {
     if (numberOfWords < 1) {
         response = "invalid request, there should be at least two words separated by "
                             "one space. The possible requests are : find <name>, "
-                            "findg <group_name>, play <name>, playg <group_name> "
-                            "print <name>, printg <group_name>, create_photo <name> <path>,"
-                            ", create_film <name> <path>, create_video <name> <path>, createg <name>";
+                            "find_g <group_name>, play <name>, "
+                            "print <name>, print_g <group_name>, create_photo <name> <path>,"
+                            ", create_film <name> <path>, create_video <name> <path>, create_g <name>, "
+                            "erase <name>, erase_g <name>";
         return true;
     }
 
@@ -107,7 +116,7 @@ int main(int argc, const char* argv[]) {
                 response = name + " was found";
             }
 
-        } else if (action == "findg") {
+        } else if (action == "find_g") {
             MediaGroupPtr group = mi->findMediaGroup(name);
             if (group != nullptr) {
                 response = name + " was found";
@@ -128,7 +137,7 @@ int main(int argc, const char* argv[]) {
                 response = ss.str();
             }
 
-        } else if (action == "printg") {
+        } else if (action == "print_g") {
             MediaGroupPtr group = mi->findMediaGroup(name);
             std::stringstream ss;
             if (group != nullptr) {
@@ -138,25 +147,34 @@ int main(int argc, const char* argv[]) {
 
         } else if (action == "create_photo") {
             mi->template createNewObject<Photo>(name, filename);
+            response = "The photo "+name+" was created";
 
         } else if (action == "create_film") {
             mi->template createNewObject<Film>(name, filename);
+            response = "The film "+name+" was created";
 
         } else if (action == "create_video") {
             mi->template createNewObject<Video>(name, filename);
+            response = "The video "+name+" was created";
 
-        } else if (action == "createg") {
-            MediaGroupPtr group = mi->findMediaGroup(name);
-            std::stringstream ss;
-            if (group != nullptr) {
-                group->print(ss);
-                response = ss.str();
-            }
+        } else if (action == "create_g") {
+            mi->createGroup(name);
+            response = "The group "+name+" was created";
+        
+        } else if (action == "erase") {
+            mi->eraseMediaObject(name);
+            response = "The media "+name+" was erased";
+
+        } else if (action == "erase_g") {
+            mi->eraseMediaGroup(name);
+            response = "The group "+name+" was erased";
 
         } else {
-            response = "invalid request, the possible requests are : find <name>, "
-                                "findg <group_name>, play <name>, playg <group_name>, "
-                                "print <name>, printg <group_name>";
+            response = "invalid request, there should be at least two words separated by "
+                            "one space. The possible requests are : find <name>, "
+                            "find_g <group_name>, play <name>, "
+                            "print <name>, print_g <group_name>, create_photo <name> <path>,"
+                            ", create_film <name> <path>, create_video <name> <path>, create_g <name>";
         }
     } catch (std::exception &e) {
         response = e.what();
@@ -188,6 +206,8 @@ int main(int argc, const char* argv[]) {
 
     std::cout<< std::endl << "Parts 8 to 9"<< std::endl<< std::endl;
 
+    std::cout<< std::endl << "Creating two groups 'Kabuki' and 'Japan'"<< std::endl<< std::endl;
+
     std::shared_ptr<Video> sharedVideoPtr = std::make_shared<Video>("SHARED_VIDEO", "./kabuki.gif", 10);
     std::shared_ptr<Photo> sharedPhotoPtr = std::make_shared<Photo>("SHARED_PHOTO", "./kabuki.jpg", 1, 2.4);
 
@@ -195,7 +215,7 @@ int main(int argc, const char* argv[]) {
 
     mgKabuki->push_back(sharedVideoPtr);
     mgKabuki->push_back(sharedPhotoPtr);
-    mgKabuki->push_back(std::make_shared<Photo>("PRIVATE_PHOTO", "./kabuki.jpg", 3, 2.4));
+    mgKabuki->push_back(std::make_shared<Photo>("UNIQUE_PHOTO", "./kabuki.jpg", 3, 2.4));
 
     mgKabuki->print(std::cout);
 
@@ -203,19 +223,22 @@ int main(int argc, const char* argv[]) {
 
     mgJapan->push_back(sharedPhotoPtr);
     mgJapan->push_back(sharedVideoPtr);
-    mgJapan->push_back(std::make_shared<Photo>("PRIVATE_PHOTO_2", 
+    mgJapan->push_back(std::make_shared<Photo>("UNIQUE_PHOTO_2", 
                         "./sakura.jpg", 1, 2.4));
-    mgJapan->push_back(std::make_shared<Photo>("PRIVATE_PHOTO_3", 
+    mgJapan->push_back(std::make_shared<Photo>("UNIQUE_PHOTO_3", 
                         "./kanji.png", 1, 2.4));
 
     mgJapan->print(std::cout);
+
+    std::cout << std::endl << std::endl << "ERASING main's pointers to shared objects..." << std::endl;
+    sharedPhotoPtr.reset();
+    sharedVideoPtr.reset();
 
     std::cout << "ERASING GROUP Kabuki... Only the unique objects will be destroyed" 
                        << std::endl;
     mgKabuki->clear();
 
-    std::cout << "ERASING GROUP Japan...  Only the unique objects will" 
-                        << " be destroyed"<< std::endl;
+    std::cout << "ERASING GROUP Japan...  All remaining objects will be destroyed"<< std::endl;
     mgJapan->clear();
 
     #endif
@@ -224,6 +247,8 @@ int main(int argc, const char* argv[]) {
 
     #ifdef PART1_7
     std::cout<< std::endl << "Parts 1 to 7"<< std::endl<< std::endl;
+
+    std::cout<< std::endl << "Creating a few objects and making sure the film's chapters work correctly"<< std::endl << std::endl;
 
     int numberOfObjects = 3;
     AbstractMedia ** objects = new AbstractMedia * [numberOfObjects];
@@ -245,20 +270,20 @@ int main(int argc, const char* argv[]) {
     numberOfChapters = 4;
     unsigned int chapters2[] = {5,2,6,2};
     film->setChapters(numberOfChapters, chapters2);
-    std::cout<< std::endl << "Changing the chapters of FILM..."<< std::endl;
+    std::cout<< std::endl << std::endl << "Changing the chapters of FILM..."<< std::endl;
 
     film->print(std::cout);
 
     unsigned int * chapters3 = film->getChapters();
     unsigned int nb_chapters = film->getNumberOfChapters();
     chapters3[0]=50;
-    std::cout<< std::endl << "Getting the FILM's chapters and setting " <<
+    std::cout<< std::endl << std::endl << "Getting the FILM's chapters and setting " <<
                 "the duration of the first chapter to 50..."<< std::endl;
 
     film->print(std::cout);
 
     Film newFilm(*film);
-    std::cout<< std::endl << "Copying FILM into NEW_FILM and modifying " <<
+    std::cout<< std::endl << std::endl << "Copying FILM into NEW_FILM and modifying " <<
                 "the chapters of NEW_FILM..."<< std::endl;
     newFilm.setName("NEW_FILM");
     newFilm.setChapters(nb_chapters, chapters3);
@@ -267,7 +292,7 @@ int main(int argc, const char* argv[]) {
     film->print(std::cout);
 
 
-    std::cout<< std::endl << "Deleting all the objects..."<< std::endl;
+    std::cout<< std::endl << std::endl << "Deleting all the objects..."<< std::endl;
     /* Correct deletion :*/
     for (int i = 0; i < numberOfObjects; i++) {
         delete objects[i];
