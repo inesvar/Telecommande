@@ -107,7 +107,7 @@ void MediaIndex::save(const std::string & filename) {
 	f.close();
 }
 
-void MediaIndex::read(const std::string & filename) {
+void MediaIndex::restore(const std::string & filename) {
 	std::ifstream f;
 	f.open(filename);
 	if (!f) {

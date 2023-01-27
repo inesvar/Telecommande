@@ -38,7 +38,7 @@ int main(int argc, const char* argv[]) {
     // creates a MediaIndex mi with two groups and some files
     MediaIndex * mi = new MediaIndex();
 
-    mi->read("save");
+    mi->restore("save");
 
     // creates the TCPServer
     auto* server = new TCPServer( [&](std::string const& request, std::string& response) {
@@ -46,8 +46,7 @@ int main(int argc, const char* argv[]) {
     // the request sent by the client to the server
     std::cout << "request: " << request<< std::endl;
 
-    // check if there's at least two words in the request
-    int numberOfWords = std::count(request.begin(), request.end(), ' ');
+    int numberOfSpaces = std::count(request.begin(), request.end(), ' ');
 
     std::string action, name, filename;
 
@@ -55,7 +54,7 @@ int main(int argc, const char* argv[]) {
     std::istringstream iss(request);
     iss >> action >> name;
 
-    if (numberOfWords >= 3) {
+    if (numberOfSpaces >= 2) {
         iss >> filename;
     }
 
@@ -124,8 +123,8 @@ int main(int argc, const char* argv[]) {
             response = "The entire MediaIndex was saved to file "+name;
         
         } else if (action == "restore") {
-            mi->read(name);
-            response = "MediaIndex was saved to file "+name;
+            mi->restore(name);
+            response = "MediaIndex was increased with files and groups from "+name;
 
         } else if (action == "print_all") {
             std::stringstream ss;
@@ -137,12 +136,11 @@ int main(int argc, const char* argv[]) {
             response = "The entire MediaIndex was erased";
 
         } else {
-            response = "invalid request, there should be at least two words separated by "
-                            "one space. The possible requests are : find <name>, "
+            response = "invalid request. The possible requests are : find <name>, "
                             "find_g <group_name>, play <name>, "
                             "print <name>, print_g <group_name>, create_photo <name> <path>,"
                             " create_film <name> <path>, create_video <name> <path>, create_g <name>, "
-                            "erase <name>, erase_g <name>, save <filename>, read <filename>, print_all, erase_all";
+                            "erase <name>, erase_g <name>, save <filename>, restore <filename>, print_all, erase_all";
         }
     } catch (std::exception &e) {
         response = e.what();

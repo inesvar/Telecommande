@@ -39,6 +39,15 @@ int main() {
 
   std::cout << "Client connected to " << HOST << ":" << PORT << std::endl;
 
+  std::cout << "The possible requests are : find <name>, "
+                            "find_g <group_name>, play <name>, "
+                            "print <name>, print_g <group_name>, create_photo <name> <path>,"
+                            " create_film <name> <path>, create_video <name> <path>, create_g <name>, "
+                            "erase <name>, erase_g <name>, save <filename>, restore <filename>, print_all, erase_all" << std::endl << std::endl;
+
+  std::cout << "Some example files are serialized in the file ./save and have been loaded in the MediaIndex by main" << std::endl << std::endl;
+  std::cout << "You can see them using the command 'print_all'" << std::endl;
+
   while (std::cin) {
     std::cout << "Request: ";
     std::string request, response;

@@ -161,7 +161,7 @@ class MediaIndex {
 		MediaGroupPtr createGroup(const std::string & name);
 
 		/**
-		 * @brief Saves the MediaIndex into the given file
+		 * @brief Saves MediaIndex into the given file
 		 * 
 		 * @param filename
 		 * @return boolean
@@ -169,10 +169,10 @@ class MediaIndex {
 		void save(const std::string & filename);
 
 		/**
-		 * @brief Adds the files and the groups contained in the given file to the MediaIndex
+		 * @brief Supresses all of MediaIndex and restores it from the given file
 		 * 
 		 * @return boolean
 		 */
-		void read(const std::string & filename);
+		void restore(const std::string & filename);
 };
 //// //// //// //// //// //// //// //// //// //// //// //// //// //// //// //// 
