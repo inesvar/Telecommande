@@ -8,7 +8,7 @@ AbstractMediaPtr MediaIndex::findMediaObject(const std::string & name) const{
 	if(it != _mediaObjects.end()){
 		return it->second;
 	}
-	throw std::runtime_error(name +" wasn't  found");
+	throw std::runtime_error(name +" wasn't found");
 }
 
 MediaGroupPtr MediaIndex::findMediaGroup(const std::string & name) const{
@@ -16,7 +16,7 @@ MediaGroupPtr MediaIndex::findMediaGroup(const std::string & name) const{
 	if(it != _groups.end()){
 		return it->second;
 	}
-	throw std::runtime_error(name +" wasn't  found");
+	throw std::runtime_error(name +" wasn't found");
 }
 
 void MediaIndex::printMediaObject(std::ostream & output, const std::string & name) const{
@@ -92,14 +92,22 @@ void MediaIndex::save(const std::string & filename) {
 		it.second->classname(f);
 		it.second->save(f); 
 		f << std::endl;
-		if (f.fail()) {                       
+		if (f.fail()) {
+			throw std::runtime_error("Can't write to file "+ filename);
+		} 
+	}
+	for (auto it : _groups) {
+		it.second->classname(f);
+		it.second->save(f); 
+		f << std::endl;
+		if (f.fail()) {
 			throw std::runtime_error("Can't write to file "+ filename);
 		} 
 	}
 	f.close();
 }
 
-void MediaIndex::restore(const std::string & filename) {
+void MediaIndex::read(const std::string & filename) {
 	std::ifstream f;
 	f.open(filename);
 	if (!f) {
@@ -132,10 +140,40 @@ void MediaIndex::restore(const std::string & filename) {
 				throw std::runtime_error("Can't read from file "+ filename);
 			} 
 			_mediaObjects[obj->getName()] = obj;
-		} else {
+		} else if (classname == "Group") {
+			std::string name;
+			f >> name;
+			MediaGroupPtr obj = std::make_shared<MediaGroup>(name);
+			unsigned int numberOfObjects;
+			f >> numberOfObjects;
+			for (unsigned int i = 0; i < numberOfObjects; i++) {
+				f >> name;
+				obj->push_back(findMediaObject(name));
+			}
+
+			if (f.fail()) {                       
+				throw std::runtime_error("Can't read from file "+ filename);
+			} 
+			_groups[obj->getName()] = obj;
+		} 
+		else {
 			throw std::runtime_error("Unknown class "+ classname);
 		}
 		getline(f, classname); // on passe a la ligne suivante
 	}
 	f.close();
+}
+
+void MediaIndex::print(std::ostream & output) const{
+	for (auto it : _mediaObjects) {
+		it.second->print(output);
+	}
+	for (auto it : _groups) {
+		output << it.second->getName();
+	}
+}
+
+void MediaIndex::erase() {
+	_mediaObjects.clear();
+	_groups.clear();
 }

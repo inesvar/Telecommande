@@ -57,6 +57,13 @@ class MediaIndex {
 		void printMediaObject(std::ostream & output, const std::string & name) const;
 
 		/**
+		 * @brief Print all the attributes of all the multimedia objects
+		 * 
+		 * @param output 
+		 */
+		void print(std::ostream & output) const;
+
+		/**
 		 * @brief Print all the attributes of a multimedia group with a given name if it exists
 		 * 
 		 * @param output 
@@ -84,6 +91,12 @@ class MediaIndex {
 		 * @param name 
 		*/
 		void eraseMediaGroup(const std::string & name);
+
+		/**
+		 * @brief Erase all the multimedia objects and groups
+		 * 
+		 */
+		void erase();
 
 		/**
 		 * @brief Construct a new multimedia object of type Film, Video or Photo
@@ -156,10 +169,10 @@ class MediaIndex {
 		void save(const std::string & filename);
 
 		/**
-		 * @brief Restores the MediaIndex from a given file
+		 * @brief Adds the files and the groups contained in the given file to the MediaIndex
 		 * 
 		 * @return boolean
 		 */
-		void restore(const std::string & filename);
+		void read(const std::string & filename);
 };
 //// //// //// //// //// //// //// //// //// //// //// //// //// //// //// //// 

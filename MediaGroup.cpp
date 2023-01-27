@@ -10,3 +10,14 @@ void MediaGroup::print(std::ostream & output) const {
 	output << "GROUP : " << getName()<< "     ";
 	for (auto & it : *this) it->print(output);
 }
+
+void MediaGroup::classname(std::ostream & file) const {
+	file << "Group" << std::endl;
+}
+
+void MediaGroup::save(std::ostream & file) const {
+	file << getName() << " " << size();
+	for (auto & it : *this) {
+		file << " " << it->getName();
+	}
+}

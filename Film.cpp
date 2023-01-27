@@ -48,14 +48,21 @@ unsigned int Film::getNumberOfChapters() const {
 }
 
 void Film::print(std::ostream & output) const { 
-    output << "The name of the film is : " << getName() << 
+    /*output << "The name of the film is : " << getName() << 
     std::endl << "The file path is : " << getfilename()<< "     " << 
     "The length of the video is : " << getLength()<< "     " <<
     "There are " << getNumberOfChapters() << " chapters"<< "     ";
     for (unsigned int i = 0; i < _numberOfChapters; i++) {
         output << "Chapter number " << i+1 << " : " << _chapters[i]<< "     ";
     }
-    output<< "     ";
+    output<< "     ";*/
+    output << "name : " << getName() << " ; path : " << getfilename() << 
+    " ; length : " << getLength()<< 
+    " ; (" << getNumberOfChapters() << ") chapters : ";
+    for (unsigned int i = 0; i < _numberOfChapters; i++) {
+        output << _chapters[i]<< ", ";
+    }
+    output<< "                                                                                               ";
 }
 
 void Film::classname(std::ostream & file) const {

@@ -18,7 +18,7 @@ class MediaGroup : public std::list<AbstractMediaPtr> {
 		 * @brief Name of the group
 		 * 
 		*/
-		std::string _filename{};
+		std::string _name{};
 
 	public:
 		/**
@@ -26,7 +26,7 @@ class MediaGroup : public std::list<AbstractMediaPtr> {
 		 * 
 		 * @param filename 
 		*/
-		MediaGroup(const std::string & filename) : std::list<AbstractMediaPtr>(), _filename(filename){};
+		MediaGroup(const std::string & name) : std::list<AbstractMediaPtr>(), _name(name){};
 
 		/**
 		 * @brief Destruct a MediaGroup object
@@ -38,7 +38,7 @@ class MediaGroup : public std::list<AbstractMediaPtr> {
 		 * 
 		 * @return const std::string & 
 		*/
-		const std::string & getName() const { return _filename;}
+		const std::string & getName() const { return _name;}
 
 		/**
 		 * @brief Print all the attributes of the multimedia objects in the group
@@ -46,6 +46,20 @@ class MediaGroup : public std::list<AbstractMediaPtr> {
 		 * @param output 
 		*/
 		void print(std::ostream & output) const;
+
+		/**
+         * @brief Returns the name of the class
+         * 
+         * @return const std::string& 
+         */
+        void classname(std::ostream & file) const;
+
+        /**
+         * @brief Save a multimedia group to a file
+         * 
+         * @param file 
+         */
+        void save(std::ostream & file) const;
 };
 
 #endif

@@ -11,11 +11,9 @@ Photo::Photo(const std::string & name, const std::string & filename, float latit
 }
 
 void Photo::print(std::ostream & output) const { 
-    output << "The name of the Photo is : " << 
-    this->getName()<< "     " << 
-    "The file path is : " << this->getfilename()<< "     " << 
-    "The latitude of the photo is : " << this->getLatitude()<< "     " <<
-    "The longitude of the photo is : " << this->getLongitude()<< "     "<< "     ";
+    output << "name : " << getName()<< 
+    " ; path : " << getfilename()<< " ; latitude : " << getLatitude()<<
+    " ; longitude : " << getLongitude()<< "                                                                                               ";
 }
 
 void Photo::classname(std::ostream & file) const {

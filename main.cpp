@@ -38,39 +38,7 @@ int main(int argc, const char* argv[]) {
     // creates a MediaIndex mi with two groups and some files
     MediaIndex * mi = new MediaIndex();
 
-    MediaGroupPtr mediaGroupJapan = mi->createGroup("Japan");
-    MediaGroupPtr mediaGroupKabuki = mi->createGroup("Kabuki");
-
-    VideoPtr sharedVideoPtr2 = mi->createVideo("SHARED_VIDEO", 
-                        "./kabuki.gif", 10);
-    PhotoPtr sharedPhotoPtr2 = mi->createPhoto("SHARED_PHOTO", 
-                        "./kabuki.jpg", 1, 2.4);
-
-    mediaGroupKabuki->push_back(sharedVideoPtr2);
-    mediaGroupKabuki->push_back(sharedPhotoPtr2);
-    mediaGroupKabuki->push_back(mi->createPhoto("UNIQUE_PHOTO", "./kabuki.jpg", 3, 2.4));
-
-    mediaGroupKabuki->print(std::cout);
-
-    mediaGroupJapan->push_back(sharedPhotoPtr2);
-
-    mediaGroupJapan->push_back(sharedVideoPtr2);
-
-    mediaGroupJapan->push_back(mi->createPhoto("UNIQUE_PHOTO_2", 
-                        "./sakura.jpg", 1, 2.4));
-    mediaGroupJapan->push_back(mi->createPhoto("UNIQUE_PHOTO_3", 
-                        "./kanji.png", 1, 2.4));
-
-    mediaGroupJapan->print(std::cout);
-
-    mi->createPhoto("UNIQUE_PHOTO_4", "./kanji.png", 1, 5);
-
-    // erase the main owned pointers
-    sharedPhotoPtr2.reset();
-    sharedVideoPtr2.reset();
-    mediaGroupJapan.reset();
-    mediaGroupKabuki.reset();
-
+    mi->read("save");
 
     // creates the TCPServer
     auto* server = new TCPServer( [&](std::string const& request, std::string& response) {
@@ -80,15 +48,6 @@ int main(int argc, const char* argv[]) {
 
     // check if there's at least two words in the request
     int numberOfWords = std::count(request.begin(), request.end(), ' ');
-    if (numberOfWords < 1) {
-        response = "invalid request, there should be at least two words separated by "
-                            "one space. The possible requests are : find <name>, "
-                            "find_g <group_name>, play <name>, "
-                            "print <name>, print_g <group_name>, create_photo <name> <path>,"
-                            " create_film <name> <path>, create_video <name> <path>, create_g <name>, "
-                            "erase <name>, erase_g <name>, save <filename>, restore <filename>";
-        return true;
-    }
 
     std::string action, name, filename;
 
@@ -165,8 +124,17 @@ int main(int argc, const char* argv[]) {
             response = "The entire MediaIndex was saved to file "+name;
         
         } else if (action == "restore") {
-            mi->restore(name);
+            mi->read(name);
             response = "MediaIndex was saved to file "+name;
+
+        } else if (action == "print_all") {
+            std::stringstream ss;
+            mi->print(ss);
+            response = ss.str();
+
+        } else if (action == "erase_all") {
+            mi->erase();
+            response = "The entire MediaIndex was erased";
 
         } else {
             response = "invalid request, there should be at least two words separated by "
@@ -174,7 +142,7 @@ int main(int argc, const char* argv[]) {
                             "find_g <group_name>, play <name>, "
                             "print <name>, print_g <group_name>, create_photo <name> <path>,"
                             " create_film <name> <path>, create_video <name> <path>, create_g <name>, "
-                            "erase <name>, erase_g <name>, save <filename>, restore <filename>";
+                            "erase <name>, erase_g <name>, save <filename>, read <filename>, print_all, erase_all";
         }
     } catch (std::exception &e) {
         response = e.what();

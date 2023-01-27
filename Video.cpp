@@ -9,10 +9,10 @@ Video::Video(const std::string & name, const std::string & filename, unsigned in
 }
 
 void Video::print(std::ostream & output) const { 
-    output << "The name of the video is : " << 
-    this->getName()<< "     " << 
-    "The file path is : " << this->getfilename()<< "     " << 
-    "The length of the video is : " << this->getLength()<< "     "<< "     ";
+    output << "name : " << 
+    this->getName()<<
+    " ; path : " << this->getfilename()<<
+    " ; length : " << this->getLength()<< "                                                                                               ";
 }
 
 void Video::classname(std::ostream & file) const {
