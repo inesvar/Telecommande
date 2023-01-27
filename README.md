@@ -1,5 +1,7 @@
 # Projet-INF224
 
+Toutes les questions ont été traitées.
+
 ---
 
 ## 4e étape : Photos et Vidéos

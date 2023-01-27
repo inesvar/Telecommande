@@ -1,0 +1,16 @@
+Photo
+SHARED_PHOTO ./kabuki.jpg 1 2.4
+Film
+SHARED_FILM ./kabuki.gif 10 2 1 1
+Photo
+UNIQUE_PHOTO ./kabuki.jpg 3 2.4
+Photo
+UNIQUE_PHOTO_2 ./sakura.jpg 1 2.4
+Photo
+UNIQUE_PHOTO_3 ./kanji.png 1 2.4
+Video
+SHARED_VIDEO ./kabuki.gif 10
+Group
+Japan 5 SHARED_PHOTO SHARED_VIDEO SHARED_FILM UNIQUE_PHOTO_2 UNIQUE_PHOTO_3  
+Group
+Kabuki 4 SHARED_VIDEO SHARED_FILM SHARED_PHOTO UNIQUE_PHOTO
