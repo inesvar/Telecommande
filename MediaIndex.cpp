@@ -1,3 +1,5 @@
+#include <fstream>
+#include <iostream>
 #include "MediaIndex.h"
 
 
@@ -37,7 +39,7 @@ void MediaIndex::eraseMediaObject(const std::string & name) {
 		}
 		_mediaObjects.erase(name);
 		return;
-	} catch (std::exception &e) { //only the findMediaObject can throw an exception
+	} catch (std::exception &e) { //only the findMediaObject can throw an exception, if the file doesn't exist
 		throw std::runtime_error("No file named "+name+" exists");
 	}
 }
@@ -47,7 +49,7 @@ void MediaIndex::eraseMediaGroup(const std::string & name) {
 		MediaGroupPtr am = findMediaGroup(name);
 		_groups.erase(name);
 		return;
-	} catch (std::exception &e) { //only the findMediaObject can throw an exception
+	} catch (std::exception &e) { //only the findMediaObject can throw an exception, if the group doesn't exist
 		throw std::runtime_error("No group named "+name+" exists");
 	}
 }
@@ -78,4 +80,62 @@ MediaGroupPtr MediaIndex::createGroup(const std::string & name){
 	MediaGroupPtr newPtr = std::make_shared<MediaGroup>(name);
 	_groups[name] = newPtr; 
 	return newPtr;
+}
+
+void MediaIndex::save(const std::string & filename) {
+	std::ofstream f;
+	f.open(filename);
+	if (!f) {
+		throw std::runtime_error("Can't open file "+ filename);
+	}
+	for (auto it : _mediaObjects) {
+		it.second->classname(f);
+		it.second->save(f); 
+		f << std::endl;
+		if (f.fail()) {                       
+			throw std::runtime_error("Can't write to file "+ filename);
+		} 
+	}
+	f.close();
+}
+
+void MediaIndex::restore(const std::string & filename) {
+	std::ifstream f;
+	f.open(filename);
+	if (!f) {
+		throw std::runtime_error("Can't open file "+ filename);
+	}
+	while (f) {          
+		std::string classname;
+		getline(f, classname);
+
+		if (classname == "Photo") {
+			PhotoPtr obj = std::make_shared<Photo>();
+			obj->restore(f);
+			if (f.fail()) {                       
+				throw std::runtime_error("Can't read from file "+ filename);
+			} 
+			_mediaObjects[obj->getName()] = obj;
+		}
+		else if (classname == "Video") {
+			VideoPtr obj = std::make_shared<Video>();
+			obj->restore(f);
+			if (f.fail()) {                       
+				throw std::runtime_error("Can't read from file "+ filename);
+			} 
+			_mediaObjects[obj->getName()] = obj;
+		}
+		else if (classname == "Film") {
+			FilmPtr obj = std::make_shared<Film>();
+			obj->restore(f);
+			if (f.fail()) {                       
+				throw std::runtime_error("Can't read from file "+ filename);
+			} 
+			_mediaObjects[obj->getName()] = obj;
+		} else {
+			throw std::runtime_error("Unknown class "+ classname);
+		}
+		getline(f, classname); // on passe a la ligne suivante
+	}
+	f.close();
 }

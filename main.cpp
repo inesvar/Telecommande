@@ -16,6 +16,7 @@
 #include <string>
 #include <iostream>
 #include <sstream>
+#include <fstream>
 #include "tcpserver.h"
 
 typedef std::shared_ptr<AbstractMedia> AbstractMediaPtr;
@@ -85,18 +86,15 @@ int main(int argc, const char* argv[]) {
                             "find_g <group_name>, play <name>, "
                             "print <name>, print_g <group_name>, create_photo <name> <path>,"
                             " create_film <name> <path>, create_video <name> <path>, create_g <name>, "
-                            "erase <name>, erase_g <name>";
+                            "erase <name>, erase_g <name>, save <filename>, restore <filename>";
         return true;
     }
 
     std::string action, name, filename;
 
-    // store the first word of the request in action
+    // store the first word of the request in action and the second word of the request in file
     std::istringstream iss(request);
-    iss >> action;
-
-    // store the second word of the request in file
-    iss >> name;
+    iss >> action >> name;
 
     if (numberOfWords >= 3) {
         iss >> filename;
@@ -161,6 +159,14 @@ int main(int argc, const char* argv[]) {
         } else if (action == "erase_g") {
             mi->eraseMediaGroup(name);
             response = "The group "+name+" was erased";
+        
+        } else if (action == "save") {
+            mi->save(name);
+            response = "The entire MediaIndex was saved to file "+name;
+        
+        } else if (action == "restore") {
+            mi->restore(name);
+            response = "MediaIndex was saved to file "+name;
 
         } else {
             response = "invalid request, there should be at least two words separated by "
@@ -168,7 +174,7 @@ int main(int argc, const char* argv[]) {
                             "find_g <group_name>, play <name>, "
                             "print <name>, print_g <group_name>, create_photo <name> <path>,"
                             " create_film <name> <path>, create_video <name> <path>, create_g <name>, "
-                            "erase <name>, erase_g <name>";
+                            "erase <name>, erase_g <name>, save <filename>, restore <filename>";
         }
     } catch (std::exception &e) {
         response = e.what();

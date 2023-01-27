@@ -17,3 +17,18 @@ void Photo::print(std::ostream & output) const {
     "The latitude of the photo is : " << this->getLatitude()<< "     " <<
     "The longitude of the photo is : " << this->getLongitude()<< "     "<< "     ";
 }
+
+void Photo::classname(std::ostream & file) const {
+    file << "Photo" << std::endl;
+}
+
+void Photo::save(std::ostream & file) const { 
+    AbstractMedia::save(file);
+    file << " " << this->getLatitude() << " " << this->getLongitude();
+}
+
+void Photo::restore(std::istream & file) {
+    AbstractMedia::restore(file);
+    file >> _latitude >> _longitude;
+}
+

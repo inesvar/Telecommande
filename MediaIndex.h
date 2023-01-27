@@ -146,5 +146,20 @@ class MediaIndex {
 		 * @return MediaGroupPtr 
 		*/
 		MediaGroupPtr createGroup(const std::string & name);
+
+		/**
+		 * @brief Saves the MediaIndex into the given file
+		 * 
+		 * @param filename
+		 * @return boolean
+		*/
+		void save(const std::string & filename);
+
+		/**
+		 * @brief Restores the MediaIndex from a given file
+		 * 
+		 * @return boolean
+		 */
+		void restore(const std::string & filename);
 };
 //// //// //// //// //// //// //// //// //// //// //// //// //// //// //// //// 

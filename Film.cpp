@@ -57,3 +57,26 @@ void Film::print(std::ostream & output) const {
     }
     output<< "     ";
 }
+
+void Film::classname(std::ostream & file) const {
+    file << "Film" << std::endl;
+}
+
+void Film::save(std::ostream & file) const {
+    Video::save(file);
+    file << " "<< _numberOfChapters << " ";
+    for (unsigned int i = 0; i < _numberOfChapters - 1; i++) {
+        file << _chapters[i] << " ";
+    }
+    file << _chapters[_numberOfChapters - 1];
+}
+
+void Film::restore(std::istream & file) {
+    Video::restore(file);
+    file >> _numberOfChapters;
+    delete _chapters;
+    _chapters = new unsigned int[_numberOfChapters];
+    for (unsigned int i = 0; i < _numberOfChapters; i++) {
+        file >> _chapters[i];
+    }
+}

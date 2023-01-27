@@ -86,6 +86,27 @@ class AbstractMedia {
          * 
         */
         virtual void play() const = 0;
+
+        /**
+         * @brief Returns the name of the class
+         * 
+         * @return const std::string& 
+         */
+        virtual void classname(std::ostream & file) const = 0;
+
+        /**
+         * @brief Save a multimedia object to a file
+         * 
+         * @param file 
+         */
+        virtual void save(std::ostream & file) const {file << _name << " " << _filename;};
+
+        /**
+         * @brief Restore a multimedia object from a file
+         * 
+         * @param file 
+         */
+        virtual void restore(std::istream & file) {file >> _name >> _filename;};
 };
 
 #endif 

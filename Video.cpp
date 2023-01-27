@@ -14,3 +14,17 @@ void Video::print(std::ostream & output) const {
     "The file path is : " << this->getfilename()<< "     " << 
     "The length of the video is : " << this->getLength()<< "     "<< "     ";
 }
+
+void Video::classname(std::ostream & file) const {
+    file << "Video" << std::endl;
+}
+
+void Video::save(std::ostream & file) const { 
+    AbstractMedia::save(file);
+    file << " " << this->getLength();
+}
+
+void Video::restore(std::istream & file) {
+    AbstractMedia::restore(file);
+    file >> _length;
+}

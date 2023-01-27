@@ -76,6 +76,27 @@ class Video : public AbstractMedia {
          * 
         */
         void play() const override {system(("mpv " + getfilename() + " &").data()); }
+
+        /**
+         * @brief Returns the name of the class
+         * 
+         * @return const std::string& 
+         */
+        void classname(std::ostream & file) const override;
+
+        /**
+         * @brief Save a multimedia object to a file
+         * 
+         * @param file 
+         */
+        void save(std::ostream & file) const override;
+
+        /**
+         * @brief Restore a multimedia object from a file
+         * 
+         * @param file 
+         */
+        void restore(std::istream & file) override;
 };
 
 #endif
