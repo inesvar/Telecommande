@@ -1,4 +1,5 @@
 package window;
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -17,7 +18,7 @@ public class Window extends JFrame implements ActionListener
 		setDefaultCloseOperation(3);
 		setLayout(new BorderLayout());
 
-		textArea = new JTextArea();
+		textArea = new JTextArea(50,50);
 		textArea.setEditable(false);
 		add(textArea, BorderLayout.CENTER);
 		scrollPane = new JScrollPane(textArea);
@@ -25,13 +26,13 @@ public class Window extends JFrame implements ActionListener
 
 		panel1 = new JPanel();
 		panel1.setLayout(new GridLayout(1, 3));
-		button1 = new JButton("Button 1");
+		button1 = new JButton("content");
 		button1.addActionListener(this);
 		panel1.add(button1);
-		button2 = new JButton("Button 2");
+		button2 = new JButton("pas content");
 		button2.addActionListener(this);
 		panel1.add(button2);
-		button3 = new JButton("Button 3");
+		button3 = new JButton("suicide");
 		button3.addActionListener(this);
 		panel1.add(button3);
 		add(panel1, BorderLayout.SOUTH);
@@ -45,11 +46,11 @@ public class Window extends JFrame implements ActionListener
 	{
 		if (e.getSource() == button1)
 		{
-			textArea.append("Ahahahaha");
+			textArea.append("\t:-)\n");
 		}
 		else if (e.getSource() == button2)
 		{
-			textArea.append("Ohohohoho");
+			textArea.append("\t>= (\n");
 		}
 		else if (e.getSource() == button3)
 		{
