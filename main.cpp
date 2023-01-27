@@ -1,6 +1,6 @@
 #define PART1_7
 #define PART8_9
-//#define PART10_13
+#define PART10_13
 
 
 #include <bits/stdc++.h>
@@ -31,13 +31,6 @@ int main(int argc, const char* argv[]) {
 ///////// ///////// ///////// ///////// ///////// ///////// ///////// /////////
 
     #ifdef PART10_13
-
-    /*if (argc > 2) {
-        std::cout << "Usage: " << argv[0] << " [port]"<< std::endl;
-        return 1;
-    } else if (argc == 2) {
-        PORT = std::stoi(argv[1]);
-    }*/
 
     std::cout<< std::endl << "Parts 10 to 11"<< std::endl<< std::endl;
 
@@ -91,7 +84,7 @@ int main(int argc, const char* argv[]) {
                             "one space. The possible requests are : find <name>, "
                             "find_g <group_name>, play <name>, "
                             "print <name>, print_g <group_name>, create_photo <name> <path>,"
-                            ", create_film <name> <path>, create_video <name> <path>, create_g <name>, "
+                            " create_film <name> <path>, create_video <name> <path>, create_g <name>, "
                             "erase <name>, erase_g <name>";
         return true;
     }
@@ -174,7 +167,8 @@ int main(int argc, const char* argv[]) {
                             "one space. The possible requests are : find <name>, "
                             "find_g <group_name>, play <name>, "
                             "print <name>, print_g <group_name>, create_photo <name> <path>,"
-                            ", create_film <name> <path>, create_video <name> <path>, create_g <name>";
+                            " create_film <name> <path>, create_video <name> <path>, create_g <name>, "
+                            "erase <name>, erase_g <name>";
         }
     } catch (std::exception &e) {
         response = e.what();

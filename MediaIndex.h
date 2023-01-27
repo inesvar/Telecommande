@@ -95,8 +95,8 @@ class MediaIndex {
 		*/
 		template <typename T> std::shared_ptr<T> createNewObject(const std::string & name, 
 							const std::string & filename) {
-								if (_groups.count(name) > 0) {
-									throw std::runtime_error("A group named "+name+" already exists");
+								if (_mediaObjects.count(name) > 0) {
+									throw std::runtime_error("A media object named "+name+" already exists");
 									return nullptr;
 								}
 								auto newPtr = std::make_shared<T>(name, filename);
