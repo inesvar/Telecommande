@@ -8,7 +8,10 @@ MediaGroup::~MediaGroup() {
 
 void MediaGroup::print(std::ostream & output) const {
 	output << "GROUP : " << getName()<< "     ";
-	for (auto & it : *this) it->print(output);
+	for (auto & it : *this) {
+		output << it->getName() << " ";
+	};
+	output << "                                                                                               ";
 }
 
 void MediaGroup::classname(std::ostream & file) const {

@@ -169,7 +169,7 @@ void MediaIndex::print(std::ostream & output) const{
 		it.second->print(output);
 	}
 	for (auto it : _groups) {
-		output << it.second->getName();
+		it.second->print(output);
 	}
 }
 
