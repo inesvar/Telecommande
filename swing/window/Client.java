@@ -24,6 +24,10 @@ public class Client
   /// Noter que le programme bloque si le serveur ne repond pas.
   ///
   public static void main(String argv[]) {
+    /*MyThread thread = new MyThread();
+    thread.start();*/
+
+
     String host = DEFAULT_HOST;
     int port = DEFAULT_PORT;
     if (argv.length >=1) host = argv[0];
@@ -38,6 +42,8 @@ public class Client
       System.err.println("Client: Couldn't connect to "+host+":"+port);
       System.exit(1);
     }
+
+    new Window(client);
     
     System.out.println("Client connected to "+host+":"+port);
 
@@ -51,6 +57,8 @@ public class Client
     BufferedReader cin = new BufferedReader(new InputStreamReader(System.in));
     
     while (true) {
+
+
       System.out.print("Request: ");
       try {
         String request = cin.readLine();
@@ -113,6 +121,7 @@ public class Client
     
     // Recuperer le resultat envoye par le serveur
     try {
+      //System.out.println(input.readLine());
       return input.readLine();
     }
     catch (java.io.IOException e) {

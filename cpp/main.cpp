@@ -40,6 +40,8 @@ int main(int argc, const char* argv[]) {
 
     mi->restore("save");
 
+    //mi->print(std::cout);
+
     // creates the TCPServer
     auto* server = new TCPServer( [&](std::string const& request, std::string& response) {
 

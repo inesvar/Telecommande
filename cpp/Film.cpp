@@ -59,10 +59,10 @@ void Film::print(std::ostream & output) const {
     output << "name : " << getName() << " ; path : " << getfilename() << 
     " ; length : " << getLength()<< 
     " ; (" << getNumberOfChapters() << ") chapters : ";
-    for (unsigned int i = 0; i < _numberOfChapters; i++) {
+    for (unsigned int i = 0; i < _numberOfChapters - 1; i++) {
         output << _chapters[i]<< ", ";
     }
-    output<< "                                                                                               ";
+    output<< _chapters[_numberOfChapters-1] << "                                                                                               ";
 }
 
 void Film::classname(std::ostream & file) const {
