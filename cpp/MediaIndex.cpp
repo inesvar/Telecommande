@@ -117,7 +117,7 @@ void MediaIndex::restore(const std::string & filename) {
 	while (f) {          
 		std::string classname;
 		getline(f, classname);
-		std::cout << classname << std::endl;
+		//std::cout << classname << std::endl;
 
 		if (classname == "Photo") {
 			PhotoPtr obj = std::make_shared<Photo>();
@@ -164,7 +164,7 @@ void MediaIndex::restore(const std::string & filename) {
 			throw std::runtime_error("Unknown class "+ classname);
 		}
 		getline(f, classname); // on passe a la ligne suivante
-		std::cout << classname << std::endl;
+		//std::cout << classname << std::endl;
 	}
 	f.close();
 }

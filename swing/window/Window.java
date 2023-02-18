@@ -69,10 +69,10 @@ public class Window extends JFrame implements ActionListener
 					// prevent the enter key from being added to the text area as it will be added manually
 					e.consume();
 					// get the command from the terminal
-					System.out.println(Arrays.toString(terminalTextZone.getText().split("\n")));
+					//System.out.println(Arrays.toString(terminalTextZone.getText().split("\n")));
 					String command = terminalTextZone.getText().split("\n")[3 + nbRequests];
 					command = command.substring(3, command.length());
-					System.out.println("command "+command);
+					//System.out.println("command "+command);
 					sendRequest(command, RequestOrigin.TERMINAL);
 
 				// backspace key
@@ -102,12 +102,9 @@ public class Window extends JFrame implements ActionListener
 	}
 
 	public void sendRequest(String action, RequestOrigin type) {
-		System.out.println("command "+action+"/");
 		String response = client.send(action);
-		System.out.println("response "+response);
+		System.out.println("answer from the server :\n"+response);
 		// replacing sequences of 95 spaces with \n
-		if (response == null)
-			return;
 
 		switch (type) {
 			case BUTTON:
@@ -116,19 +113,13 @@ public class Window extends JFrame implements ActionListener
 				terminalTextZone.append("\n>> ");
 				nbRequests++;
 				response = response.replace("          ", "\n");
-				System.out.println("response "+response);
+				//System.out.println("response "+response);
 				serverAnswerTextZone.append("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n"+response + "\n");
 				break;
 			case IMPLICIT:
 				response = response.replace("          ", "\n");
-				System.out.println("response "+response);
+				//System.out.println("response "+response);
 		}
-		/*if (!fromTerminal) {
-			terminalTextZone.append(action+"\n>> ");
-			nbRequests++;
-		} else {
-			terminalTextZone.append("\n>> ");
-		}*/
 		if (action.equals("print_all")) {
 			refresh(response);
 		} else {
@@ -141,14 +132,15 @@ public class Window extends JFrame implements ActionListener
 		mediaButtonsPanel.removeAll();
 		mediaButtonsPanel.repaint();
 		onScreenElements.clear();
-		if (elements.length == 0) {
+		if (elements.length == 1) {
+			mediaButtonsPanel.add(new JLabel("No media found."));
 			pack();
 			return;
 		}
 		ArrayList<String> files = new ArrayList<>();
-		System.out.println(Arrays.toString(elements));
+		//System.out.println(Arrays.toString(elements));
 		for (int i = 0; i < elements.length; i++) {
-			System.out.println(elements[i]);
+			//System.out.println(elements[i]);
 			if (elements[i].split(" ")[0].equals("GROUP"))
 				continue;
 			files.add(elements[i].split(" ")[2]);
@@ -162,7 +154,7 @@ public class Window extends JFrame implements ActionListener
 				button.setPreferredSize(new Dimension(250,100));
 				mediaButtonsPanel.add(button);
 
-				System.out.println("added " + file);
+				System.out.println("added " + file + " to the mediaButtonsPanel");
 			}
 		}
 		pack();
