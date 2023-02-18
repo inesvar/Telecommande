@@ -12,7 +12,7 @@ void Video::print(std::ostream & output) const {
     output << "name : " << 
     this->getName()<<
     " ; path : " << this->getfilename()<<
-    " ; length : " << this->getLength()<< "                                                                                               ";
+    " ; length : " << this->getLength()<< "          ";
 }
 
 void Video::classname(std::ostream & file) const {

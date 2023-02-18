@@ -38,7 +38,7 @@ int main(int argc, const char* argv[]) {
     // creates a MediaIndex mi with two groups and some files
     MediaIndex * mi = new MediaIndex();
 
-    mi->restore("save");
+    mi->restore("save_backup");
 
     //mi->print(std::cout);
 

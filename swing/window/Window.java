@@ -4,18 +4,16 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Window extends JFrame implements ActionListener
 {
-	private JTextArea textArea;
-	private JMenuBar menuBar;
-	private JToolBar toolBar;
-	private JButton button1, button2, button3;
-	private Action printAll, eraseAll, exit;
-	private JPanel mainPanel, panel1, panel2, panel3;
-	private JScrollPane scrollPane;
+	private JTextArea serverAnswerTextZone, terminalTextZone;
+	private JPanel terminalPanel, serverMsgPanel, mediaButtonsPanel;
 	private Client client;
-	private ArrayList<String> onScreenElements;
+	private ArrayList<String> onScreenElements = new ArrayList<String>();
+	private int nbRequests = 0;
+	private enum RequestOrigin {TERMINAL, BUTTON, IMPLICIT};
 
 	public Window(Client client)
 	{
@@ -23,107 +21,176 @@ public class Window extends JFrame implements ActionListener
 		setSize(1500, 1500);
 		setLayout(new BorderLayout());
 		this.client = client;
-		this.onScreenElements = new ArrayList<String>();
 
-		printAll = new Action("print_all");
-		eraseAll = new Action("erase_all");
-		exit = new Action("exit", true);
+		AbstractAction printAll = new sendRequestAction("print_all");
+		AbstractAction eraseAll = new sendRequestAction("erase_all");
+		AbstractAction saveAll = new sendRequestAction("save userSave");
+		AbstractAction restoreAll = new sendRequestAction("restore userSave");
+		AbstractAction exit = new exitAction();
 
-		// creating the menu bar
-		menuBar = new JMenuBar();
-		toolBar = new JToolBar();
+		// creating the tool bar
+		JToolBar toolBar = new JToolBar();
 		toolBar.add(printAll);
 		toolBar.add(eraseAll);
+		toolBar.add(saveAll);
+		toolBar.add(restoreAll);
 		toolBar.add(exit);
-		
-		menuBar.add(toolBar);
+		toolBar.setFloatable(false);
 
 		// panels
-		mainPanel = new JPanel();
-		add(mainPanel, BorderLayout.SOUTH);
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new BorderLayout());
+		add(mainPanel, BorderLayout.CENTER);
 		add(toolBar, BorderLayout.NORTH);
-		panel1 = new JPanel();
-		mainPanel.add(panel1, BorderLayout.EAST); // terminal type panel
-		panel2 = new JPanel();
-		mainPanel.add(panel2, BorderLayout.NORTH); // the responses of the server
-		panel3 = new JPanel();
-		panel3.setLayout(new GridLayout(3, 3));
-		mainPanel.add(panel3, BorderLayout.SOUTH); // the multimedia elements
-		
-		//panel3.add(printAll);
+		terminalPanel = new JPanel();
+		mainPanel.add(terminalPanel, BorderLayout.EAST); // terminal type panel
+		serverMsgPanel = new JPanel();
+		mainPanel.add(serverMsgPanel, BorderLayout.WEST); // the responses of the server panel
+		mediaButtonsPanel = new JPanel();
+		mediaButtonsPanel.setLayout(new GridLayout(3, 3));
+		add(mediaButtonsPanel, BorderLayout.SOUTH); // media buttons panel
 
-		// scroll text area
-		textArea = new JTextArea(30,70); // 50 lignes, 50 colonnes
-		textArea.setEditable(false);
-		textArea.setLineWrap(true);
-		panel2.add(textArea, BorderLayout.CENTER);
+		mediaButtonsPanel.add(new JLabel("Media will appear here."));
 
-		scrollPane = new JScrollPane(textArea);
-		panel2.add(scrollPane, BorderLayout.CENTER);
+		// terminal area
+		terminalTextZone = new JTextArea(30,80); // 50 lignes, 50 colonnes
+		terminalTextZone.setEditable(true);
+		terminalTextZone.setLineWrap(true);
+		terminalPanel.add(terminalTextZone, BorderLayout.CENTER);
+		terminalTextZone.append("The possible requests are : find <name>, find_g <group_name>, ");
+		terminalTextZone.append("play <name>, print <name>, print_g <group_name>, create_photo <name> <path>, ");
+		terminalTextZone.append("create_film <name> <path>, create_video <name> <path>, create_g <name>, erase <name>, ");
+		terminalTextZone.append("erase_g <name>, save <filename>, restore <filename>, print_all, erase_all\n\n");
+		terminalTextZone.append("Welcome to the client terminal. Type your commands here.\n>> ");
+		// set up terminalTextZone so that it can act as a terminal
+		terminalTextZone.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					// prevent the enter key from being added to the text area as it will be added manually
+					e.consume();
+					// get the command from the terminal
+					System.out.println(Arrays.toString(terminalTextZone.getText().split("\n")));
+					String command = terminalTextZone.getText().split("\n")[3 + nbRequests];
+					command = command.substring(3, command.length());
+					System.out.println("command "+command);
+					sendRequest(command, RequestOrigin.TERMINAL);
+
+				// backspace key
+				} else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+					e.consume();
+				}
+			}
+		});
+
+
+		// server message area
+		serverAnswerTextZone = new JTextArea(30,80); // 50 lignes, 50 colonnes
+		serverAnswerTextZone.setEditable(false);
+		serverAnswerTextZone.setLineWrap(true);
+		serverMsgPanel.add(serverAnswerTextZone, BorderLayout.CENTER);
+		serverAnswerTextZone.append("Responses of the server will appear here.\n");
+
+		JScrollPane serverMsgScrollPane = new JScrollPane(serverAnswerTextZone);
+		serverMsgPanel.add(serverMsgScrollPane, BorderLayout.CENTER);
+
+		JScrollPane terminalScrollPane = new JScrollPane(terminalTextZone);
+		terminalPanel.add(terminalScrollPane, BorderLayout.CENTER);
 		
 		setDefaultCloseOperation(3); // EXIT ON CLOSE
 		pack();
 		setVisible(true);
 	}
 
-	public void actionPerformed(ActionEvent e){}
+	public void sendRequest(String action, RequestOrigin type) {
+		System.out.println("command "+action+"/");
+		String response = client.send(action);
+		System.out.println("response "+response);
+		// replacing sequences of 95 spaces with \n
+		if (response == null)
+			return;
 
-	class Action extends AbstractAction {
+		switch (type) {
+			case BUTTON:
+				terminalTextZone.append(action);
+			case TERMINAL:
+				terminalTextZone.append("\n>> ");
+				nbRequests++;
+				response = response.replace("          ", "\n");
+				System.out.println("response "+response);
+				serverAnswerTextZone.append("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n"+response + "\n");
+				break;
+			case IMPLICIT:
+				response = response.replace("          ", "\n");
+				System.out.println("response "+response);
+		}
+		/*if (!fromTerminal) {
+			terminalTextZone.append(action+"\n>> ");
+			nbRequests++;
+		} else {
+			terminalTextZone.append("\n>> ");
+		}*/
+		if (action.equals("print_all")) {
+			refresh(response);
+		} else {
+			sendRequest("print_all", RequestOrigin.IMPLICIT);
+		}
+	}
+
+	public void refresh(String response) {
+		String[] elements = response.split("\n");
+		mediaButtonsPanel.removeAll();
+		mediaButtonsPanel.repaint();
+		onScreenElements.clear();
+		if (elements.length == 0) {
+			pack();
+			return;
+		}
+		ArrayList<String> files = new ArrayList<>();
+		System.out.println(Arrays.toString(elements));
+		for (int i = 0; i < elements.length; i++) {
+			System.out.println(elements[i]);
+			if (elements[i].split(" ")[0].equals("GROUP"))
+				continue;
+			files.add(elements[i].split(" ")[2]);
+		}
+		for (String file : files) {
+			if (!onScreenElements.contains(file)) {
+				onScreenElements.add(file);
+				sendRequestAction a = new sendRequestAction("play "+file);
+				JButton button = new JButton(a);
+				button.setBackground(Color.WHITE);
+				button.setPreferredSize(new Dimension(250,100));
+				mediaButtonsPanel.add(button);
+
+				System.out.println("added " + file);
+			}
+		}
+		pack();
+	}
+
+	public void actionPerformed(ActionEvent e){
+	}
+
+	class sendRequestAction extends AbstractAction {
 
 		private String action;
-		private boolean exit;
 
-		public Action(String name) {
+		public sendRequestAction(String name) {
 			super(name);
 			this.action = name;
-			this.exit = false;
-			System.out.println("aha");
-		}
-
-		public Action(String name, boolean exit) {
-			super(name);
-			this.action = name;
-			this.exit = exit;
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			if (exit) {
-				System.exit(0);
-			} else {
-				String response = client.send(action);
-				// replacing sequences of 95 spaces with \n
-				response = response.replace("                                                                                               ", "\n");
-				//response = response.replace("name", "aha");
-				System.out.println(response);
-				textArea.append(response + "\n");
-				if (action.equals("print_all")) {
-					String[] elements = response.split("\n");
-					String[] files = new String[elements.length];
-					for (int i = 0; i < elements.length; i++) {
-						files[i] = elements[i].split(" ")[2];
-					}
-					for (String file : files) {
-						if (!onScreenElements.contains(file)) {
-							onScreenElements.add(file);
-							//if (file.endsWith(".jpg") || file.endsWith(".png")) {
-								button1 = new JButton(file);
-								button1.setPreferredSize(new Dimension(250,100));
-								//JLabel label = new JLabel(new ImageIcon(file));
-								panel3.add(button1);
-								pack();
-								System.out.println("added " + file);
-							/*} else if (file.endsWith(".mp3")) {
-								// TODO
-							} else if (file.endsWith(".mp4")) {
-								// TODO
-							}*/
-						}
-					}
-				/*} else if (action.equals("erase_all")) {
-					onScreenElements.clear();
-					panel3.removeAll();*/
-				}
-			}
+			sendRequest(action, RequestOrigin.BUTTON);
+		}
+	}
+
+	class exitAction extends AbstractAction {
+		public exitAction() {
+			super("exit");
+		}
+		public void actionPerformed(ActionEvent e) {
+			System.exit(0);
 		}
 	}
 }

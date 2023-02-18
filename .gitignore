@@ -1,0 +1,10 @@
+*
+!*/
+!*.cpp
+!*.h
+!*.java
+!readme.md
+!Makefile
+!save
+!save_backup
+!.gitignore

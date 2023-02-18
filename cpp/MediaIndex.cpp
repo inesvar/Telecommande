@@ -8,7 +8,7 @@ AbstractMediaPtr MediaIndex::findMediaObject(const std::string & name) const{
 	if(it != _mediaObjects.end()){
 		return it->second;
 	}
-	throw std::runtime_error(name +" wasn't found");
+	throw std::runtime_error("File "+name +" wasn't found");
 }
 
 MediaGroupPtr MediaIndex::findMediaGroup(const std::string & name) const{
@@ -16,7 +16,7 @@ MediaGroupPtr MediaIndex::findMediaGroup(const std::string & name) const{
 	if(it != _groups.end()){
 		return it->second;
 	}
-	throw std::runtime_error(name +" wasn't found");
+	throw std::runtime_error("Group "+name +" wasn't found");
 }
 
 void MediaIndex::printMediaObject(std::ostream & output, const std::string & name) const{
@@ -104,6 +104,7 @@ void MediaIndex::save(const std::string & filename) {
 			throw std::runtime_error("Can't write to file "+ filename);
 		} 
 	}
+	f << "end" << std::endl;
 	f.close();
 }
 
@@ -116,6 +117,7 @@ void MediaIndex::restore(const std::string & filename) {
 	while (f) {          
 		std::string classname;
 		getline(f, classname);
+		std::cout << classname << std::endl;
 
 		if (classname == "Photo") {
 			PhotoPtr obj = std::make_shared<Photo>();
@@ -155,11 +157,14 @@ void MediaIndex::restore(const std::string & filename) {
 				throw std::runtime_error("Can't read from file "+ filename);
 			} 
 			_groups[obj->getName()] = obj;
-		} 
+		} else if (classname == "end") {
+			break;
+		}
 		else {
 			throw std::runtime_error("Unknown class "+ classname);
 		}
 		getline(f, classname); // on passe a la ligne suivante
+		std::cout << classname << std::endl;
 	}
 	f.close();
 }

@@ -11,7 +11,7 @@ void MediaGroup::print(std::ostream & output) const {
 	for (auto & it : *this) {
 		output << " " << it->getName();
 	};
-	output << "                                                                                               ";
+	output << "          ";
 }
 
 void MediaGroup::classname(std::ostream & file) const {

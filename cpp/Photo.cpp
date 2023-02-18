@@ -13,7 +13,7 @@ Photo::Photo(const std::string & name, const std::string & filename, float latit
 void Photo::print(std::ostream & output) const { 
     output << "name : " << getName()<< 
     " ; path : " << getfilename()<< " ; latitude : " << getLatitude()<<
-    " ; longitude : " << getLongitude()<< "                                                                                               ";
+    " ; longitude : " << getLongitude()<< "          ";
 }
 
 void Photo::classname(std::ostream & file) const {

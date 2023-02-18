@@ -62,7 +62,7 @@ void Film::print(std::ostream & output) const {
     for (unsigned int i = 0; i < _numberOfChapters - 1; i++) {
         output << _chapters[i]<< ", ";
     }
-    output<< _chapters[_numberOfChapters-1] << "                                                                                               ";
+    output<< _chapters[_numberOfChapters-1] << "          ";
 }
 
 void Film::classname(std::ostream & file) const {
