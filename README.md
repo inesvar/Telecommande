@@ -1,6 +1,12 @@
 # Projet-INF224
 
+
 Toutes les questions ont été traitées.
+Pour la partie en C++, j'ai fait les questions additionnelles suivantes :
+- partie 10 : j'ai implémenté deux méthodes pour effacer les médias et les groupes
+- partie 12 : on peut sérialiser et désérialiser des groupes
+
+Pour la partie Java, j'ai implémenté une télécommande qui permet d'envoyer n'importe quelle requête vers le serveur.
 
 ---
 
@@ -42,9 +48,7 @@ Comme on code un accesseur pour le tableau des durées des chapitres, nous avons
 
 De façon cohérente, j'ai implémenté un deuxième accesseur, donc un pour chaque variable d'instance. Ainsi, on peut utiliser correctement le tableau de durée puisqu'on connait sa longueur.
 
-Comme il est nécessaire d'utiliser les deux accesseurs pour accéder aux chapitres, j'ai initialement envisagé de faire un unique accesseur qui renvoie une le tableau des données, avec ajouté au début du tableau, le nombre de chapitres, mais c'est finalement plus lisible au niveau du code d'avoir deux accesseurs.
-
-Afin de respecter l'encapsulation, l'accesseur du tableau de durée renvoie une copie profonde du tableau sur le tas.
+Afin de respecter l'encapsulation, l'accesseur du tableau de durée renvoie une **copie profonde du tableau sur le tas**.
 De même pour le modifieur qui réalise une copie profonde du tableau donné en argument.
 
 ---
@@ -62,3 +66,11 @@ Il faut dont faire une copie en profondeur et recopier l'objet pointé et non le
 ## 8e étape : créer des groupes
 
 La liste d'objets doit être une liste de pointeurs afin que l'on puisse utiliser le polymorphisme. En Java, en dehors des types de base, on utilise toujours des références pour les listes d'objets, il n'y a donc pas de choix équivalent à faire.
+
+---
+
+## 13e étape : traitement des erreurs
+
+J'ai utilisé des exceptions pour gérer les cas suivants :
+- si on crée plusieurs groupes ou objets ayant le même nom
+- si on supprime un groupe ou un objet qui n'existe pas 
