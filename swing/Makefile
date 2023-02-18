@@ -9,12 +9,12 @@
 #
 # Nom du programme (doit correspondre au fichier qui contient main())
 #
-PROG = window.Client
+PROG = Client
 
 #
 # Fichiers sources .java
 #
-SOURCES = window/Client.java  window/Window.java 
+SOURCES = Client.java Window.java 
 
 #
 # Compilateur Java
@@ -40,7 +40,7 @@ run: all
 classes: $(SOURCES:.java=.class)
 
 clean:
-	-@$(RM) window/*.class 1>/dev/null 2>&1
+	-@$(RM) *.class 1>/dev/null 2>&1
   
 tar:
 	tar cvf ${PROG}.tar.gz ${SOURCES}
