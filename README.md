@@ -28,11 +28,15 @@ On peut traiter des objets photos et vidéos avec le même code grâce au polymo
 
 Toutefois, on ne code pas exactement de la même façon qu'en Java : on doit utiliser le déréférencement pour accéder aux méthodes des objets vidéos ou photos, parce qu'on a créé un tableau de pointeurs. Par exemple :
 
-`objects[i]->play();`
+```cpp
+objects[i]->play();
+```
 
 En Java, on écrirait plutôt :
 
-`objects[i].play();`
+```java
+objects[i].play();
+```
 
 Cette différence est due au fait que le tableau `objects` contient ici des pointeurs vers les objets. Il est également possible de créer des tableaux d'objets en C++ : dans ce cas, on n'aurait pas besoin de déréférencer. En Java, on a une seule possibilité pour les tableaux d'objets : on fait des tableaux de références. Il n'y a donc pas besoin de distinguer deux cas.
 
