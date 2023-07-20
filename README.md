@@ -9,7 +9,7 @@ make run
 ```
 Puis, dans un autre terminal, la fenêtre graphique en java :
 ```bash
-cd ../swing # ou cd swing si on part du repertoire racine
+cd ../swing # ou 'cd swing' si on part du repertoire racine
 make run
 ```
 
