@@ -1,6 +1,10 @@
 # Projet-INF224 : Télécommande
 
-## Comment le tester ?
+## Principe
+
+C'est une télécommande simplifiée qui permet de jouer des vidéos ou d'afficher des photos d'une librairie multimédia.
+
+## Comment tester le code ?
 
 Il faut d'abord lancer le serveur en C++ :
 ```bash
@@ -14,8 +18,9 @@ make run
 ```
 
 ---
+## Description du code
 
-## 4e étape : Photos et Vidéos
+### Photos et Vidéos
 
 La méthode `play` ne doit pas avoir d'implémentation dans la classe de base. C'est donc une méthode abstraite. On le code de la façon suivante :
 
@@ -27,7 +32,7 @@ Comme une de ses méthodes est abstraite, la classe de base est désormais abstr
 
 ---
 
-## 5e étape : Traitement uniforme
+### Traitement uniforme
 
 On peut traiter des objets photos et vidéos avec le même code grâce au polymorphisme : les classes `Video` et `Photo` héritent de la superclasse `AbstractMedia`.
 
@@ -51,7 +56,7 @@ Dans le cas du C++, il est également nécessaire de détruire les pointés quan
 
 ---
 
-## 6e étape : Films et tableaux
+### Films et tableaux
 
 Comme on code un accesseur pour le tableau des durées des chapitres, nous avons besoin de connaître sa longueur. J'ai donc choisi de créer une deuxième variable d'instance `_numberOfChapters`.
 
@@ -62,7 +67,7 @@ De même pour le modifieur qui réalise une copie profonde du tableau donné en 
 
 ---
 
-## 7e étape : Destruction et copie des objets
+### Destruction et copie des objets
 
 La seule classe qui générait des fuites mémoires était la classe `Film` car c'est la seule qui avait un pointeur parmi les variables d'instances. Pour corriger ce problème, on libère le pointeur dans le destructeur de l'objet.
 
@@ -72,13 +77,13 @@ Il faut dont faire une copie en profondeur et recopier l'objet pointé et non le
 
 ---
 
-## 8e étape : créer des groupes
+### Créer des groupes
 
 La liste d'objets doit être une liste de pointeurs afin que l'on puisse utiliser le polymorphisme. En Java, en dehors des types de base, on utilise toujours des références pour les listes d'objets, il n'y a donc pas de choix équivalent à faire.
 
 ---
 
-## 13e étape : traitement des erreurs
+### Traitement des erreurs
 
 J'ai utilisé des exceptions pour gérer les cas suivants :
 - si on crée plusieurs groupes ou objets ayant le même nom
