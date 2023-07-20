@@ -1,12 +1,17 @@
 # Projet-INF224 : Télécommande
 
+## Comment le tester ?
 
-Toutes les questions du sujet ont été traitées.
-Pour la partie en C++, j'ai fait les questions additionnelles suivantes :
-- partie 10 : j'ai implémenté deux méthodes pour effacer les médias et les groupes
-- partie 12 : on peut sérialiser et désérialiser des groupes
-
-Pour la partie Java, j'ai implémenté une télécommande qui permet d'envoyer n'importe quelle requête vers le serveur.
+Il faut d'abord lancer le serveur en C++ :
+```bash
+cd cpp
+make run
+```
+Puis, dans un autre terminal, la fenêtre graphique en java :
+```bash
+cd ../swing # ou cd swing si on part du repertoire racine
+make run
+```
 
 ---
 
