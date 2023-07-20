@@ -1,7 +1,7 @@
-# Projet-INF224
+# Projet-INF224 : Télécommande
 
 
-Toutes les questions ont été traitées.
+Toutes les questions du sujet ont été traitées.
 Pour la partie en C++, j'ai fait les questions additionnelles suivantes :
 - partie 10 : j'ai implémenté deux méthodes pour effacer les médias et les groupes
 - partie 12 : on peut sérialiser et désérialiser des groupes
